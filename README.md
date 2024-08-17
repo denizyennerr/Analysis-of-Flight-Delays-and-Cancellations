@@ -3,8 +3,8 @@ This project analyzes factors influencing flight delays and cancellations by exa
 
 ### Data Sources
 
-Airline Flight Delay and Cancellation Data, August 2019 - August 2023 obtained from the US Department of Transportation, Bureau of Transportation Statistics.
-[Download Here](https://www.transtats.bts.gov)
+- Airline Flight Delay and Cancellation Data, August 2019 - August 2023 obtained from the US Department of Transportation, Bureau of Transportation Statistics.
+- [Download Here](https://www.transtats.bts.gov)
 
 ### Tools
 - Python
@@ -16,5 +16,11 @@ Airline Flight Delay and Cancellation Data, August 2019 - August 2023 obtained f
 - Seaborn: A Python data visualization library based on Matplotlib, providing a high-level interface for drawing attractive and informative statistical graphics.
 - Scikit-learn: A Python machine learning library offering simple and efficient data mining and analysis tools.
 
+### Data Cleaning/Preparation
+In the initial data preparation phase, we performed the following tasks:
+1. Data loading and inspection.
+2. Handling missing values.
+3. Data cleaning and formatting.
 
-
+### Exploratory Data Analysis
+- 
