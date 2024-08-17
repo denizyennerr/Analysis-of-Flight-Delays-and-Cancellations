@@ -8,7 +8,7 @@ This project analyzes factors influencing flight delays and cancellations by exa
 
 ### Tools
 - Python
-  
+
 ### Python Libraries
 - NumPy: A fundamental package for numerical computations in Python.
 - Pandas: A library providing high-performance, easy-to-use data structures and data analysis tools for Python.
@@ -18,9 +18,28 @@ This project analyzes factors influencing flight delays and cancellations by exa
 
 ### Data Cleaning/Preparation
 In the initial data preparation phase, we performed the following tasks:
-1. Data loading and inspection.
-2. Handling missing values.
-3. Data cleaning and formatting.
+1. Creating a date-time variable for time series analysis and the initial data preparation.
+2. Correcting departure and arrival times for data preprocessing.
+3. Checking for duplicates to ensure data quality.
+4. Cleaning the data in the CSV file for accurate analysis.
 
-### Exploratory Data Analysis
-- 
+### Exploratory Data Analysis 
+
+- Which airlines show the worst/best performance in terms of delays?
+- Does flight performance vary by the month of the year?
+- Which routes are most likely to fall into the 1st level delay category?
+
+### Data Analysis
+
+- Creating a categorical variable to understand the relationship between each airline and distance.
+- Classifying flight distances into three main groups: distances under 500 miles, distances between 500-1000 miles, and distances of 1000 miles and above.
+- Identifying the airlines that perform the most flights.
+- Comparing the performance of airlines based on delays.
+- Analyzing whether airline performance varies by different months of the year and showing the top 5 best and worst airline performances.
+- Determining the percentage of flight cancellations and show how it varies by airline.
+- Is there a specific time of day and/or time of year when delay durations are higher?
+- Identifying the routes with the highest delay durations.
+- Building a machine learning model to predict flight delay durations.
+- Evaluation of the model.
+
+
