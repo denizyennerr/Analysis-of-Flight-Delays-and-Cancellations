@@ -1,2 +1,18 @@
 # Analysis-of-Flight-Delays-and-Cancellations
-This project analyzes factors influencing flight delays and cancellations by examining flight data, including departure and arrival times, weather conditions, and airline performance. The goal is to identify patterns and correlations to improve aviation industry's operational efficiency and passenger satisfaction.
+This project analyzes factors influencing flight delays and cancellations by examining flight data, including departure and arrival times, weather conditions, and airline performance. The goal is to identify patterns and correlations to improve the aviation industry's operational efficiency and passenger satisfaction.
+
+### Data Sources
+
+Airline Flight Delay and Cancellation Data, August 2019 - August 2023 obtained from the US Department of Transportation, Bureau of Transportation Statistics.
+For the link: https://www.transtats.bts.gov
+
+### Tools
+- Python
+  
+### Python Libraries
+- NumPy: A fundamental package for numerical computations in Python.
+- Pandas: A library providing high-performance, easy-to-use data structures and data analysis tools for Python.
+- Matplotlib: A plotting library for creating static, animated, and interactive visualizations in Python.
+- Seaborn: A Python data visualization library based on Matplotlib, providing a high-level interface for drawing attractive and informative statistical graphics.
+- Scikit-learn: A Python library for machine learning, offering simple and efficient data mining and analysis tools.
+
