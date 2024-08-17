@@ -4,7 +4,7 @@ This project analyzes factors influencing flight delays and cancellations by exa
 ### Data Sources
 
 Airline Flight Delay and Cancellation Data, August 2019 - August 2023 obtained from the US Department of Transportation, Bureau of Transportation Statistics.
-For the link: https://www.transtats.bts.gov
+[Download Here](https://www.transtats.bts.gov)
 
 ### Tools
 - Python
@@ -14,5 +14,7 @@ For the link: https://www.transtats.bts.gov
 - Pandas: A library providing high-performance, easy-to-use data structures and data analysis tools for Python.
 - Matplotlib: A plotting library for creating static, animated, and interactive visualizations in Python.
 - Seaborn: A Python data visualization library based on Matplotlib, providing a high-level interface for drawing attractive and informative statistical graphics.
-- Scikit-learn: A Python library for machine learning, offering simple and efficient data mining and analysis tools.
+- Scikit-learn: A Python machine learning library offering simple and efficient data mining and analysis tools.
+
+
 
