@@ -2,17 +2,17 @@
 
 ## Table Of Contents
 
-- [Project Overview](project-overview)
-- [Data Sources](data-sources)
-- [Tools](tools)
-- [Python Libraries](python-libraries)
-- [Data Cleaning/Preparation](data-cleaning/preparation)
-- [Exploratory Data Analysis](exploratory-data-analysis)
-- [Data Analysis](data-analysis)
-- [Code](code)
-- [Recommendations](recommendations)
-- [Limitations](limitations)
-- [References](references)
+- [Project Overview](#project-overview)
+- [Data Sources](#data-sources)
+- [Tools](#tools)
+- [Python Libraries](#python-libraries)
+- [Data Cleaning/Preparation](#data-cleaning/preparation)
+- [Exploratory Data Analysis](#exploratory-data-analysis)
+- [Data Analysis](#data-analysis)
+- [Code](#code)
+- [Recommendations](#recommendations)
+- [Limitations](#limitations)
+- [References](#references)
 
 ### Project Overview
 This project analyzes factors influencing flight delays and cancellations by examining flight data, including departure and arrival times, weather conditions, and airline performance. The goal is to identify patterns and correlations to improve the aviation industry's operational efficiency and passenger satisfaction.
