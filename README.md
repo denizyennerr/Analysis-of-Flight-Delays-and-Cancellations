@@ -60,12 +60,16 @@ In the initial data preparation phase, we performed the following tasks:
 
 
 ### Code
+```Python
+```
+
+
 
 ### Results/Findings 
 The analysis results are summarised as follows:
-1. lksjsjda
-2. lksdcjljd
-3. lksjalj
+1. 
+2. 
+3. 
 
 
 ### Recommendations
