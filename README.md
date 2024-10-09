@@ -30,7 +30,6 @@ This project analyzes factors influencing flight delays and cancellations by exa
 - Pandas: A library providing high-performance, easy-to-use data structures and data analysis tools for Python.
 - Matplotlib: A plotting library for creating static, animated, and interactive visualizations in Python.
 - Seaborn: A Python data visualization library based on Matplotlib, providing a high-level interface for drawing attractive and informative statistical graphics.
-- Scikit-learn: A Python machine learning library offering simple and efficient data mining and analysis tools.
 
 ### Data Cleaning/Preparation
 In the initial data preparation phase, we performed the following tasks:
@@ -55,13 +54,20 @@ In the initial data preparation phase, we performed the following tasks:
 - Determining the percentage of flight cancellations and show how it varies by airline.
 - Is there a specific time of day and/or time of year when delay durations are higher?
 - Identifying the routes with the highest delay durations.
-- Building a machine learning model to predict flight delay durations.
-- Evaluation of the model.
+
 
 
 ### Code
 ```Python
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+import warnings
+warnings.filterwarnings("ignore")
 ```
+
 
 
 
