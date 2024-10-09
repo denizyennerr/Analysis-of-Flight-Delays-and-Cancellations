@@ -80,13 +80,13 @@ df.head()
 df_copy= pd.read_csv(r"C:\Users\ASUS\OneDrive\Desktop\Uçuş Rötarları ve İptallerinin Analizi.csv")
 df_copy
 ```
-Exploratory Data Analysis
+#### Exploratory Data Analysis
 ```Python
 df.info()
 df.isnull().sum()
 df.describe().T
 ```
-Project Details
+#### Project Details
 - A date-time index was created for Time Series Analysis and Forecasting, allowing for more effective plotting and time series evaluations. 
 - Departure and arrival times were corrected to ensure the accuracy of the data.
 - Duplicates were checked to identify any inconsistencies or repeated information within the dataset.
@@ -96,6 +96,39 @@ Project Details
 - Determined which airlines perform the best.
 - Analyzed whether flight performance varies by month, whether a certain airline consistently performs poorly, or if performance fluctuates.
 - Identified which routes have the highest probability of falling into the level 1 delay category.
+  
+A date-time index was generated for Time Series Analysis and Forecasting, enabling more effective visualization and time series analysis.
+```Python
+df['date'] = pd.to_datetime(df[['year', 'month', 'day', 'hour', 'minute']])
+df.insert(0, 'date', df.pop('date'))
+df.drop(columns=['year', 'month', 'day','hour', 'minute'], inplace=True)
+df['sched_dep_time'] = df['sched_dep_time'].astype(str).str.zfill(4)
+df['sched_dep_time']= pd.to_datetime(df['sched_dep_time'], format="%H%M").dt.time.astype(str).str[:5]
+df.head(30)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### Results/Findings 
