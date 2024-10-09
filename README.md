@@ -87,15 +87,15 @@ df.isnull().sum()
 df.describe().T
 ```
 Project Details
--- A date-time index was created for Time Series Analysis and Forecasting, allowing for more effective plotting and time series evaluations. 
--- Departure and arrival times were corrected to ensure the accuracy of the data.
--- Duplicates were checked to identify any inconsistencies or repeated information within the dataset.
--- A logical relationship between weather variables and flight delays was investigated. 
--- Cleaning and organizing the data from the CSV file.
--- Identified which airlines perform the worst in terms of delays.
--- Determined which airlines perform the best.
--- Analyzed whether flight performance varies by month, whether a certain airline consistently performs poorly, or if performance fluctuates.
--- Identified which routes have the highest probability of falling into the level 1 delay category.
+- A date-time index was created for Time Series Analysis and Forecasting, allowing for more effective plotting and time series evaluations. 
+- Departure and arrival times were corrected to ensure the accuracy of the data.
+- Duplicates were checked to identify any inconsistencies or repeated information within the dataset.
+- A logical relationship between weather variables and flight delays was investigated.
+- Cleaning and organizing the data from the CSV file.
+- Identified which airlines perform the worst in terms of delays.
+- Determined which airlines perform the best.
+- Analyzed whether flight performance varies by month, whether a certain airline consistently performs poorly, or if performance fluctuates.
+- Identified which routes have the highest probability of falling into the level 1 delay category.
 
 
 ### Results/Findings 
