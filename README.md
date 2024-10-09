@@ -58,6 +58,9 @@ In the initial data preparation phase, we performed the following tasks:
 
 
 ### Code
+
+We start with importing the necessary libraries.
+
 ```Python
 import numpy as np
 import pandas as pd
@@ -67,8 +70,21 @@ import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings("ignore")
 ```
-
-
+Then 
+```Python
+df=pd.read_csv(r"C:\Users\ASUS\OneDrive\Desktop\Uçuş Rötarları ve İptallerinin Analizi.csv")
+df = pd.DataFrame(df)
+df.head()
+```
+```Python
+df_copy= pd.read_csv(r"C:\Users\ASUS\OneDrive\Desktop\Uçuş Rötarları ve İptallerinin Analizi.csv")
+df_copy
+```
+```Python
+df.info()
+df.isnull().sum()
+df.describe().T
+```
 
 
 ### Results/Findings 
