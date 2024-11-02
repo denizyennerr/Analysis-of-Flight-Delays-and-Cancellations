@@ -284,7 +284,57 @@ for col in categorical_columns:
     plt.show()
 
 ```
+## Step 4.2 Bivariate Analysis
+For our bivariate analysis, we'll consider the dep_delay column as the target. 
+We can analyze the relationship between dep_delay and other columns. 
+To do this, we can use scatter plots for numerical columns and violin plots for categorical columns. 
+We skip id, flight, tailnum, time_hour as they are identifiers or contain redundant information.
 
+```
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Set the target column
+target_column = 'dep_delay'  
+
+# Numerical columns (excluding identifiers and redundant info)
+numerical_columns = ['year', 'month', 'day', 'sched_dep_time', 'sched_arr_time', 'distance', 'hour', 
+                     'minute', 'air_time', 'temp', 'dewp', 'humid', 'wind_dir', 'wind_speed', 
+                     'wind_gust', 'precip', 'pressure', 'visib']
+
+# Scatter plots for numerical columns vs target
+for col in numerical_columns:
+    plt.figure(figsize=(8, 4))
+    sns.scatterplot(data=df, x=col, y=target_column, alpha=0.5)
+    plt.title(f'Scatter Plot of {col} vs {target_column}')
+    plt.xlabel(col)
+    plt.ylabel(target_column)
+    plt.show()
+
+# Categorical columns (excluding identifiers and redundant info)
+categorical_columns = ['carrier', 'origin', 'dest', 'airline', 'route']
+
+# Violin plots for categorical columns vs target
+for col in categorical_columns:
+    plt.figure(figsize=(10, 5))
+    sns.violinplot(data=df, x=col, y=target_column, inner="quartile", color="brown")
+    plt.title(f'Violin Plot of {target_column} by {col}')
+    plt.xlabel(col)
+    plt.ylabel(target_column)
+    plt.xticks(rotation=45)
+    plt.show()
+```
+
+### Project Details
+- A date-time index was created for Time Series Analysis and Forecasting, allowing for more effective plotting and time series evaluations. 
+- Departure and arrival times were corrected to ensure the accuracy of the data.
+- Duplicates were checked to identify any inconsistencies or repeated information within the dataset.
+- A logical relationship between weather variables and flight delays was investigated.
+- Cleaning and organizing the data from the CSV file.
+- Identified which airlines perform the worst in terms of delays.
+- Determined which airlines perform the best.
+- Analyzed whether flight performance varies by month, whether a certain airline consistently performs poorly, or if performance fluctuates.
+- Identified which routes have the highest probability of falling into the level 1 delay category.
 
   
 A date-time index was generated for Time Series Analysis and Forecasting, enabling more effective visualization and time series analysis.
@@ -296,6 +346,25 @@ df['sched_dep_time'] = df['sched_dep_time'].astype(str).str.zfill(4)
 df['sched_dep_time']= pd.to_datetime(df['sched_dep_time'], format="%H%M").dt.time.astype(str).str[:5]
 df.head(30)
 ```
+Interference:
+
+1. **id**: The `id` feature is a unique identifier for each flight record. It has no informational value for predicting delays, as it merely distinguishes each record without providing insight into any flight characteristics. Including `id` could add noise and increase computational complexity, so it will be excluded.
+
+2. **tailnum**: Each aircraft has a unique `tailnum`, resulting in a high number of unique values (4043) across the dataset. Although specific aircraft might be prone to delays (e.g., older planes requiring frequent maintenance), the high dimensionality of `tailnum` could lead to overfitting. The potential predictive gain from including `tailnum` is outweighed by the risk of overfitting, so it will be removed.
+
+3. **time_hour**: This feature represents the scheduled departure time in a "yyyy-mm-dd hh:mm:ss" format. Since we have separate features for `year`, `month`, `day`, and `sched_dep_time`, the `time_hour` feature is redundant and will be removed to reduce data redundancy.
+
+4. **minute**: The `minute` component of the scheduled departure time is already captured within `sched_dep_time`. Including both `minute` and `sched_dep_time` would introduce redundancy without adding unique information, so `minute` will be excluded.
+
+5. **hour**: Similar to `minute`, `hour` is also part of the `sched_dep_time` feature. As it does not contribute additional information beyond what `sched_dep_time` provides, it will be removed to avoid redundancy.
+
+6. **carrier**: The `carrier` feature represents a two-letter airline code, while the `name` feature contains the full name of the airline. Since these features provide overlapping information, we will retain `name` (as it is more descriptive) and remove `carrier` to avoid redundancy.
+
+7. **year**: Since all flights in this dataset took place in 2013, `year` is a constant feature and does not contribute to the model’s predictive power. A constant feature cannot help the model distinguish between records, so it will be removed.
+
+8. **flight**: The `flight` feature, representing designated flight numbers, has many unique values (3844). Although specific flights might have delay patterns, the high dimensionality of `flight` could lead to overfitting. Consequently, `flight` will be excluded from the dataset to maintain model generalizability.
+
+# Step 5: Data Preprocessing
 
 
 
