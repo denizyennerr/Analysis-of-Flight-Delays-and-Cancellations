@@ -482,7 +482,116 @@ df_cleaned
 | 4     | 2022-01-01 23:49:00 | 00:35    | 23:49         | 46        | 06:16    | 05:45          | 31        | UA      | 507    | N426UA  | PDX    | ORD  | 196.0    | 1739     | United Air Lines Inc. | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
 
 
+#Step 6: Project Details
+## Step 6.1 Correlation between Numerical Features
 
+- A logical relationship between weather variables and flight delays was investigated.
+  
+```Python
+numeric_df = df_cleaned.select_dtypes(include=['float64', 'int64'])
+
+delay_columns = ['dep_delay', 'arr_delay']
+weather_columns = ['temp', 'dewp', 'humid', 'wind_dir', 'wind_speed', 'wind_gust', 'precip', 'pressure', 'visib']
+
+existing_columns = [col for col in delay_columns + weather_columns if col in numeric_df.columns]
+subset_df = numeric_df[existing_columns]
+
+subset_df = subset_df.dropna()
+
+corr = subset_df.corr()
+
+plt.figure(figsize=(12, 10))
+plt.matshow(corr, fignum=1, cmap='YlGnBu')
+plt.colorbar()
+
+plt.xticks(range(len(corr.columns)), corr.columns, rotation=90)
+plt.yticks(range(len(corr.columns)), corr.columns)
+
+for (i, j), val in np.ndenumerate(corr.values):
+    plt.text(j, i, f'{val:.2f}', ha='center', va='center', color='black')
+
+plt.title('Correlation between Weather and Delay Time')
+plt.show()
+```
+
+- Identified which airlines perform the worst in terms of delays.
+```
+worst_performer= df_cleaned.groupby("carrier").sum().sort_values(by="dep_delay", ascending=False)
+worst_performer.head(5)
+```
+| carrier | dep_delay | arr_delay | flight   | air_time    | distance | temp     | dewp     | humid       | wind_dir   | wind_speed   | wind_gust    | precip | pressure      | visib      |
+|---------|-----------|-----------|----------|-------------|----------|----------|----------|-------------|------------|--------------|--------------|--------|---------------|------------|
+| AS      | 271775    | 106750    | 8214162  | 6629773.0   | 52832566 | 1926061.4 | 1625351.1 | 3111531.76 | 6408410.0 | 283662.66688 | 326433.323802 | 224.8616 | 41179032.7    | 359443.60  |
+| DL      | 171518    | 14605     | 6610553  | 2830734.0   | 23502339 | 773384.8 | 651917.0 | 1242257.65 | 2594660.0 | 114517.57014 | 131784.529369 | 93.3219 | 16459434.0    | 143012.33  |
+| QX      | 121612    | 81767     | 11684962 | 1180098.0   | 6933990  | 941200.3 | 789680.7 | 1482571.91 | 3106660.0 | 135284.54602 | 155682.749873 | 109.6436 | 19840516.4    | 172873.41  |
+| WN      | 78754     | 20462     | 3613688  | 770253.0    | 5880952  | 343527.3 | 285479.4 | 519748.79  | 1118510.0 | 46148.57956  | 53106.862388  | 36.2240 | 7081655.7     | 63197.75   |
+| AA      | 72289     | 32390     | 2066108  | 725827.0    | 6179705  | 172969.2 | 145300.9 | 274049.26  | 576670.0  | 23971.89818  | 27586.380988  | 21.6781 | 3652974.7     | 32388.15   |
+
+- Determined which airlines perform the best.
+```
+best_performer= df_cleaned.groupby("carrier").sum().sort_values(by="dep_delay", ascending=True)
+best_performer.head()
+```
+| carrier | dep_delay | arr_delay | flight  | air_time   | distance | temp    | dewp    | humid     | wind_dir | wind_speed  | wind_gust   | precip | pressure  | visib  |
+|---------|-----------|-----------|---------|------------|----------|---------|---------|-----------|----------|-------------|-------------|--------|-----------|--------|
+| G4      | 2436      | 2022      | 17123   | 11995.0    | 100247   | 4675.9  | 3926.6  | 6786.27   | 13710.0  | 530.50958   | 610.499814  | 0.7708 | 92620.2   | 862.25 |
+| HA      | 5942      | 3335      | 10128   | 241856.0   | 1889778  | 32938.8 | 28690.2 | 58146.26  | 99430.0  | 4072.61042  | 4686.678619 | 4.8977 | 735653.8  | 6459.75|
+| F9      | 6300      | 4854      | 172830  | 51015.0    | 401619   | 23002.3 | 18170.0 | 30447.84  | 79200.0  | 3215.27932  | 3700.079136 | 2.8852 | 450716.8  | 4064.06|
+| NK      | 8879      | 4393      | 379062  | 89964.0    | 665145   | 39494.5 | 32847.8 | 61641.66  | 129040.0 | 5262.51694  | 6055.999244 | 3.8301 | 835843.0  | 7359.11|
+| B6      | 26951     | 19990     | 154254  | 174509.0   | 1542234  | 34901.9 | 26131.1 | 40348.70  | 124520.0 | 5297.04034  | 6095.728083 | 3.6764 | 652737.6  | 5913.37|
+
+
+- Analyzed whether flight performance varies by month, whether a certain airline consistently performs poorly, or if performance fluctuates.
+```
+df['year'] = df_cleaned['date'].dt.year
+df['month'] = df_cleaned['date'].dt.month
+
+monthly_dep_delay = df.groupby(['year', 'month'])['dep_delay'].mean().reset_index()
+
+print(monthly_dep_delay)
+```
+| year | month | dep_delay |
+|------|-------|-----------|
+| 2022 | 1     | 10.804097 |
+| 2022 | 2     | 5.254844  |
+| 2022 | 3     | 5.896043  |
+| 2022 | 4     | 10.032263 |
+| 2022 | 5     | 7.127991  |
+| 2022 | 6     | 8.900074  |
+
+```
+df['year'] = df_cleaned['date'].dt.year
+df['month'] = df_cleaned['date'].dt.month
+
+monthly_arr_delay = df.groupby(['year', 'month'])['arr_delay'].mean().reset_index()
+
+print(monthly_arr_delay)
+```
+| year | month | arr_delay |
+|------|-------|-----------|
+| 2022 | 1     | 4.648079  |
+| 2022 | 2     | -1.099085 |
+| 2022 | 3     | 0.134775  |
+| 2022 | 4     | 4.611300  |
+| 2022 | 5     | 1.708427  |
+| 2022 | 6     | 3.790448  |
+
+```
+avg_delay_by_carrier = df_cleaned.groupby("carrier")["dep_delay"].mean()
+
+plt.figure(figsize=(10, 6))
+avg_delay_by_carrier.plot(kind="bar", color="purple", edgecolor="black")
+plt.title("Average Departure Delay by Carrier")
+plt.xlabel("Carrier")
+plt.ylabel("Average Departure Delay (minutes)")
+plt.xticks(rotation=45, ha="right")
+plt.tight_layout()
+plt.show()
+```
+
+![image](https://github.com/user-attachments/assets/c1323ccc-8886-4e8c-808a-465c5f68240b)
+
+- Identified which routes have the highest probability of falling into the level 1 delay category.
 
 
 
