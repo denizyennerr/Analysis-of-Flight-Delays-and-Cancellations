@@ -18,7 +18,7 @@
 ### Project Overview
 The objective of this project is to analyze a comprehensive dataset containing flight information, including departure and arrival times, delays, distances, weather conditions, and airline details. By exploring this data, we aim to identify significant patterns and correlations that contribute to flight delays. This analysis will help to understand the key factors influencing delays, allowing us to develop predictive models and actionable insights to improve airline punctuality and operational efficiency. Through careful data exploration and modeling, this project seeks to support better decision-making for airlines and enhance the overall passenger experience by reducing delays.
 
-#### Project Details
+## Project Details
 - A date-time index was created for Time Series Analysis and Forecasting, allowing for more effective plotting and time series evaluations. 
 - Departure and arrival times were corrected to ensure the accuracy of the data.
 - Duplicates were checked to identify any inconsistencies or repeated information within the dataset.
