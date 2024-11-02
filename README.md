@@ -15,10 +15,10 @@
 - [Limitations](#limitations)
 - [References](#references)
 
-### Project Overview
+## Project Overview
 The objective of this project is to analyze a comprehensive dataset containing flight information, including departure and arrival times, delays, distances, weather conditions, and airline details. By exploring this data, we aim to identify significant patterns and correlations that contribute to flight delays. This analysis will help to understand the key factors influencing delays, allowing us to develop predictive models and actionable insights to improve airline punctuality and operational efficiency. Through careful data exploration and modeling, this project seeks to support better decision-making for airlines and enhance the overall passenger experience by reducing delays.
 
-## Project Details
+### Project Details
 - A date-time index was created for Time Series Analysis and Forecasting, allowing for more effective plotting and time series evaluations. 
 - Departure and arrival times were corrected to ensure the accuracy of the data.
 - Duplicates were checked to identify any inconsistencies or repeated information within the dataset.
@@ -52,10 +52,6 @@ In the initial data preparation phase, we performed the following tasks:
 
 ### Exploratory Data Analysis 
 
-- Which airlines show the worst/best performance in terms of delays?
-- Does flight performance vary by the month of the year?
-- Which routes are most likely to fall into the 1st level delay category?
-
 ### Data Analysis
 
 - Creating a categorical variable to understand the relationship between each airline and distance.
@@ -66,8 +62,6 @@ In the initial data preparation phase, we performed the following tasks:
 - Determining the percentage of flight cancellations and show how it varies by airline.
 - Is there a specific time of day and/or time of year when delay durations are higher?
 - Identifying the routes with the highest delay durations.
-
-
 
 ### Code
 
