@@ -291,9 +291,6 @@ To do this, we can use scatter plots for numerical columns and violin plots for 
 We skip id, flight, tailnum, time_hour as they are identifiers or contain redundant information.
 
 ```
-import seaborn as sns
-import matplotlib.pyplot as plt
-
 # Set the target column
 target_column = 'dep_delay'  
 
@@ -323,6 +320,7 @@ for col in categorical_columns:
     plt.ylabel(target_column)
     plt.xticks(rotation=45)
     plt.show()
+
 ```
 
 ### Project Details
