@@ -175,7 +175,7 @@ memory usage: 24.6+ MB
   - **Weather Variables**: Columns such as `wind_dir`, `wind_speed`, and `wind_gust` contain missing values, likely due to unavailable weather data at certain times.
 
 
-# Step 3.2 Summary Statistics for Numerical Variables
+## Step 3.2 Summary Statistics for Numerical Variables
 
 ```
 df.describe().T
