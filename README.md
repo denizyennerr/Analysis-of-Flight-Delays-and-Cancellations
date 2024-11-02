@@ -181,7 +181,7 @@ import qgrid
 qgrid_widget = qgrid.show_grid(df, show_toolbar=True)
 qgrid_widget
 df.describe().T
-
+```
 **Inferences:**
 
 - **year**: All records are from the year 2022, indicating no variation in the year feature.
@@ -198,7 +198,7 @@ df.describe().T
 - **precip**: Precipitation varies from 0 to 0.32 inches, with many zero entries, suggesting limited rainfall data.
 - **pressure**: Atmospheric pressure varies between 991 and 1039.2 hPa, with a median of around 1020.7 hPa.
 - **visib**: Visibility ranges from 0 to 10 miles, with the majority at 10 miles, indicating mostly clear conditions.
-```
+
 
 
 
