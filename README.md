@@ -3,6 +3,7 @@
 ## Table Of Contents
 
 - [Project Overview](#project-overview)
+- [Project Details](#project-details)
 - [Data Sources](#data-sources)
 - [Tools](#tools)
 - [Python Libraries](#python-libraries)
@@ -16,6 +17,17 @@
 
 ### Project Overview
 The objective of this project is to analyze a comprehensive dataset containing flight information, including departure and arrival times, delays, distances, weather conditions, and airline details. By exploring this data, we aim to identify significant patterns and correlations that contribute to flight delays. This analysis will help to understand the key factors influencing delays, allowing us to develop predictive models and actionable insights to improve airline punctuality and operational efficiency. Through careful data exploration and modeling, this project seeks to support better decision-making for airlines and enhance the overall passenger experience by reducing delays.
+
+#### Project Details
+- A date-time index was created for Time Series Analysis and Forecasting, allowing for more effective plotting and time series evaluations. 
+- Departure and arrival times were corrected to ensure the accuracy of the data.
+- Duplicates were checked to identify any inconsistencies or repeated information within the dataset.
+- A logical relationship between weather variables and flight delays was investigated.
+- Cleaning and organizing the data from the CSV file.
+- Identified which airlines perform the worst in terms of delays.
+- Determined which airlines perform the best.
+- Analyzed whether flight performance varies by month, whether a certain airline consistently performs poorly, or if performance fluctuates.
+- Identified which routes have the highest probability of falling into the level 1 delay category.
 
 ### Data Sources
 - Airline Flight Delay and Cancellation Data, August 2019 - August 2023 obtained from the US Department of Transportation, Bureau of Transportation Statistics.
@@ -202,16 +214,6 @@ memory usage: 24.6+ MB
 | pressure      | 111006.0  | 1020.187948| 7.710084  | 991.00 | 1015.200000 | 1020.700000 | 1025.500000 | 1039.200000 |
 | visib         | 111006.0  | 8.922346   | 2.537055  | 0.00  | 10.000000  | 10.000000  | 10.000000  | 10.000000 |
 
-```
-def dataframe_to_markdown(df):
-    markdown = "| " + " | ".join(df.columns) + " |\n"
-    markdown += "| " + " | ".join(["---"] * len(df.columns)) + " |\n"
-    for _, row in df.iterrows():
-        markdown += "| " + " | ".join(map(str, row.values)) + " |\n"
-    return markdown
-
-print(dataframe_to_markdown(df))
-```
 
 **Inferences:**
 
@@ -230,30 +232,66 @@ print(dataframe_to_markdown(df))
 - **pressure**: Atmospheric pressure varies between 991 and 1039.2 hPa, with a median of around 1020.7 hPa.
 - **visib**: Visibility ranges from 0 to 10 miles, with the majority at 10 miles, indicating mostly clear conditions.
 
+## Step 3.3 | Summary Statistics for Categorical Variables
 
-
-
-
-
-
-
-
-#### Exploratory Data Analysis
-```Python
-df.info()
-df.isnull().sum()
-df.describe().T
 ```
-#### Project Details
-- A date-time index was created for Time Series Analysis and Forecasting, allowing for more effective plotting and time series evaluations. 
-- Departure and arrival times were corrected to ensure the accuracy of the data.
-- Duplicates were checked to identify any inconsistencies or repeated information within the dataset.
-- A logical relationship between weather variables and flight delays was investigated.
-- Cleaning and organizing the data from the CSV file.
-- Identified which airlines perform the worst in terms of delays.
-- Determined which airlines perform the best.
-- Analyzed whether flight performance varies by month, whether a certain airline consistently performs poorly, or if performance fluctuates.
-- Identified which routes have the highest probability of falling into the level 1 delay category.
+df.describe(include='object')
+```
+
+| Metric   | carrier | tailnum | origin | dest | airline             | route   |
+|----------|---------|---------|--------|------|----------------------|---------|
+| count    | 111006  | 110877  | 111006 | 111006 | 111006             | 111006  |
+| unique   | 12      | 3520    | 2      | 97   | 12                 | 149     |
+| top      | AS      | N447QX  | SEA    | LAX  | Alaska Airlines Inc.| SEA-PDX |
+| freq     | 41697   | 524     | 82559  | 5450 | 41697              | 3867    |
+
+**Inferences for Categorical Variables:**
+
+- **carrier, airline**: These columns represent the airline carrier code (`carrier`) and the full airline name (`airline`). There are 12 unique airlines in the dataset. The most frequent carrier is Alaska Airlines Inc. (`AS`), accounting for 41,697 flights.
+- **tailnum**: This column is a unique identifier for each aircraft, with a total of 3,520 unique aircraft in the dataset. The most frequent aircraft identifier is `N447QX`, appearing in 524 flights.
+- **origin, dest**: These columns represent the airport codes for the departure (`origin`) and arrival (`dest`) airports. There are 2 unique origin airports, with Seattle (SEA) being the most frequent departure airport (82,559 flights). For destination airports, there are 97 unique values, with Los Angeles (LAX) being the most common destination, totaling 5,450 flights.
+- **route**: This column represents the route of the flight, combining origin and destination codes (e.g., `SEA-PDX`). There are 149 unique routes, with the Seattle to Portland (SEA-PDX) route being the most frequent, appearing in 3,867 flights.
+
+
+
+# Exploratory Data Analysis
+
+## Step 4.1 Univariate Analysis
+We can perform univariate analysis on these columns based on their datatype:
+For numerical data, we can use a histogram to visualize the data distribution. The number of bins should be chosen appropriately to represent the data well.
+For categorical data, we can use a bar plot to visualize the frequency of each category.
+
+```Python
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# List of columns based on data types
+numerical_columns = ['year', 'month', 'day', 'sched_dep_time', 'sched_arr_time', 'flight', 'distance', 'hour', 'minute',
+                     'dep_time', 'dep_delay', 'arr_time', 'arr_delay', 'air_time', 'temp', 'dewp', 'humid', 
+                     'wind_dir', 'wind_speed', 'wind_gust', 'precip', 'pressure', 'visib']
+categorical_columns = ['carrier', 'tailnum', 'origin', 'dest', 'airline', 'route']
+
+# Univariate analysis for numerical columns
+for col in numerical_columns:
+    plt.figure(figsize=(8, 4))
+    plt.hist(df[col].dropna(), bins=30, edgecolor='k', alpha=0.7)
+    plt.title(f'Histogram of {col}')
+    plt.xlabel(col)
+    plt.ylabel('Frequency')
+    plt.show()
+
+# Univariate analysis for categorical columns
+for col in categorical_columns:
+    plt.figure(figsize=(8, 4))
+    df[col].value_counts().plot(kind='bar', color='darkblue', edgecolor='k')
+    plt.title(f'Bar Plot of {col}')
+    plt.xlabel(col)
+    plt.ylabel('Frequency')
+    plt.show()
+
+```
+
+
   
 A date-time index was generated for Time Series Analysis and Forecasting, enabling more effective visualization and time series analysis.
 ```Python
