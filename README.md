@@ -176,7 +176,6 @@ memory usage: 24.6+ MB
 
 ## Step 3.2 Summary Statistics for Numerical Variables
 
-```
 | Variable      | Count     | Mean       | Std       | Min   | 25%       | 50%       | 75%       | Max       |
 |---------------|-----------|------------|-----------|-------|-----------|-----------|-----------|-----------|
 | year          | 111006.0  | 2022.000000 | 0.000000  | 2022.00 | 2022.000000 | 2022.000000 | 2022.000000 | 2022.000000 |
@@ -203,6 +202,7 @@ memory usage: 24.6+ MB
 | pressure      | 111006.0  | 1020.187948| 7.710084  | 991.00 | 1015.200000 | 1020.700000 | 1025.500000 | 1039.200000 |
 | visib         | 111006.0  | 8.922346   | 2.537055  | 0.00  | 10.000000  | 10.000000  | 10.000000  | 10.000000 |
 
+```
 def dataframe_to_markdown(df):
     markdown = "| " + " | ".join(df.columns) + " |\n"
     markdown += "| " + " | ".join(["---"] * len(df.columns)) + " |\n"
@@ -211,8 +211,8 @@ def dataframe_to_markdown(df):
     return markdown
 
 print(dataframe_to_markdown(df))
-
 ```
+
 **Inferences:**
 
 - **year**: All records are from the year 2022, indicating no variation in the year feature.
