@@ -290,7 +290,10 @@ We can analyze the relationship between dep_delay and other columns.
 To do this, we can use scatter plots for numerical columns and violin plots for categorical columns. 
 We skip id, flight, tailnum, time_hour as they are identifiers or contain redundant information.
 
-```
+```Python
+import pandas as pd
+import matplotlib.pyplot as plt
+
 # Set the target column
 target_column = 'dep_delay'  
 
