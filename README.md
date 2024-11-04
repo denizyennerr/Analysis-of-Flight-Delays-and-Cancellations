@@ -367,14 +367,39 @@ The dataset contains information on flights, including schedule, delay, and weat
 | **precip**        | Precipitation amount (in inches)                         |
 | **pressure**      | Atmospheric pressure (in millibars)                      |
 | **visib**         | Visibility (in miles)                                    |
+```Python
+df['date'] = pd.to_datetime(df[['year', 'month', 'day', 'hour', 'minute']])
+
+df.insert(0, 'date', df.pop('date'))
+
+df.drop(columns=['year', 'month', 'day','hour', 'minute'], inplace=True)
+```
+Interference:
+
+1. **id**: The `id` feature is a unique identifier for each flight record. It has no informational value for predicting delays, as it merely distinguishes each record without providing insight into any flight characteristics. Including `id` could add noise and increase computational complexity, so it will be excluded.
+
+2. **tailnum**: Each aircraft has a unique `tailnum`, resulting in a high number of unique values (4043) across the dataset. Although specific aircraft might be prone to delays (e.g., older planes requiring frequent maintenance), the high dimensionality of `tailnum` could lead to overfitting. The potential predictive gain from including `tailnum` is outweighed by the risk of overfitting, so it will be removed.
+
+3. **time_hour**: This feature represents the scheduled departure time in a "yyyy-mm-dd hh:mm:ss" format. Since we have separate features for `year`, `month`, `day`, and `sched_dep_time`, the `time_hour` feature is redundant and will be removed to reduce data redundancy.
+
+4. **minute**: The `minute` component of the scheduled departure time is already captured within `sched_dep_time`. Including both `minute` and `sched_dep_time` would introduce redundancy without adding unique information, so `minute` will be excluded.
+
+5. **hour**: Similar to `minute`, `hour` is also part of the `sched_dep_time` feature. As it does not contribute additional information beyond what `sched_dep_time` provides, it will be removed to avoid redundancy.
+
+6. **carrier**: The `carrier` feature represents a two-letter airline code, while the `name` feature contains the full name of the airline. Since these features provide overlapping information, we will retain `name` (as it is more descriptive) and remove `carrier` to avoid redundancy.
+
+7. **year**: Since all flights in this dataset took place in 2013, `year` is a constant feature and does not contribute to the model’s predictive power. A constant feature cannot help the model distinguish between records, so it will be removed.
+
+8. **flight**: The `flight` feature, representing designated flight numbers, has many unique values (3844). Although specific flights might have delay patterns, the high dimensionality of `flight` could lead to overfitting. Consequently, `flight` will be excluded from the dataset to maintain model generalizability.
 
 
       
 ```Python
-df['sched_dep_time'] = df['sched_dep_time'].astype(str).str.zfill(4)
+df['sched_dep_time'] =df['sched_dep_time'].astype(str).str.zfill(4)
 df['sched_dep_time']= pd.to_datetime(df['sched_dep_time'], format="%H%M").dt.time.astype(str).str[:5]
 df.head(7)
 ```
+
 | date                | dep_time | sched_dep_time | dep_delay | arr_time | sched_arr_time | arr_delay | carrier | flight | tailnum | origin | dest | air_time | distance | airline               | route   | temp | dewp | humid | wind_dir | wind_speed | wind_gust | precip | pressure | visib |
 |---------------------|----------|----------------|-----------|----------|----------------|-----------|---------|--------|---------|--------|------|----------|----------|-----------------------|---------|------|------|-------|----------|------------|-----------|--------|----------|-------|
 | 2022-01-01 23:59:00 | 1.0      | 23:59         | 2.0       | 604.0    | 618            | -14.0     | UA      | 555    | N405UA  | SEA    | IAH  | 221.0    | 1874     | United Air Lines Inc. | SEA-IAH | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
@@ -445,6 +470,36 @@ df.head()
 | 2022-01-01 23:49:00 | 00:35    | 23:49         | 46.0      | NaT      | 05:45          | 31.0      | UA      | 507    | N426UA  | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
 
 ```Python
+df['dep_time']=df['dep_time'].astype(int).astype(str).str.zfill(4)
+df['dep_time']
+
+df['dep_time']=df['dep_time'].astype(int).astype(str).str.zfill(4)
+df['dep_time']
+
+df['dep_time'] = df['dep_time'].str.strip()
+
+df_filtered = df[df['dep_time'].str.isnumeric()]
+
+try:
+  df['dep_time'] = pd.to_datetime(df_filtered['dep_time'], format="%H%M", errors='coerce')
+except ValueError:
+  pass
+
+df['dep_time'] = df['dep_time'].dt.time.astype(str).str[:5]
+df.head()
+
+```
+
+| date                | dep_time | sched_dep_time | dep_delay | arr_time | sched_arr_time | arr_delay | carrier | flight | tailnum | route   | temp | dewp | humid | wind_dir | wind_speed | wind_gust | precip | pressure | visib |
+|---------------------|----------|----------------|-----------|----------|----------------|-----------|---------|--------|---------|---------|------|------|-------|----------|------------|-----------|--------|----------|-------|
+| 2022-01-01 23:59:00 | 00:01    | 23:59          | 2.0       | 06:04    | 06:18          | -14.0     | UA      | 555    | N405UA  | SEA-IAH | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 2022-01-01 22:50:00 | 00:01    | 22:50          | 71.0      | 02:42    | 01:42          | 60.0      | AS      | 72     | N265AK  | SEA-FAI | 32.0 | 23.0 | 69.04 | 170.0    | 9.20624    | 10.594357 | 0.0    | 1023.4   | 10.0  |
+| 2022-01-01 23:55:00 | 00:10    | 23:55          | 15.0      | 07:59    | 07:30          | 29.0      | AS      | 270    | N274AK  | SEA-ATL | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 2022-01-01 23:50:00 | 00:25    | 23:50          | 35.0      | 06:06    | 05:50          | 16.0      | AS      | 7      | N281AK  | SEA-ORD | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 2022-01-01 23:49:00 | 00:35    | 23:49          | 46.0      | 06:16    | 05:45          | 31.0      | UA      | 507    | N426UA  | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
+
+
+```Python
 df['arr_delay'] = df['arr_delay'].fillna(0)
 
 df['arr_delay'] = df['arr_delay'].astype(int)
@@ -506,26 +561,7 @@ df_cleaned
 - Identified which routes have the highest probability of falling into the level 1 delay category.
 
   
-A date-time index was generated for Time Series Analysis and Forecasting, enabling more effective visualization and time series analysis.
-```Python
-df['date'] = pd.to_datetime(df[['year', 'month', 'day', 'hour', 'minute']])
-df.insert(0, 'date', df.pop('date'))
-df.drop(columns=['year', 'month', 'day','hour', 'minute'], inplace=True)
-df['sched_dep_time'] = df['sched_dep_time'].astype(str).str.zfill(4)
-df['sched_dep_time']= pd.to_datetime(df['sched_dep_time'], format="%H%M").dt.time.astype(str).str[:5]
-df.head(30)
-```
-Interference:
-
-1. **id**: The `id` feature is a unique identifier for each flight record. It has no informational value for predicting delays, as it merely distinguishes each record without providing insight into any flight characteristics. Including `id` could add noise and increase computational complexity, so it will be excluded.
-2. **tailnum**: Each aircraft has a unique `tailnum`, resulting in a high number of unique values (4043) across the dataset. Although specific aircraft might be prone to delays (e.g., older planes requiring frequent maintenance), the high dimensionality of `tailnum` could lead to overfitting. The potential predictive gain from including `tailnum` is outweighed by the risk of overfitting, so it will be removed.
-3. **time_hour**: This feature represents the scheduled departure time in a "yyyy-mm-dd hh:mm:ss" format. Since we have separate features for `year`, `month`, `day`, and `sched_dep_time`, the `time_hour` feature is redundant and will be removed to reduce data redundancy.
-4. **minute**: The `minute` component of the scheduled departure time is already captured within `sched_dep_time`. Including both `minute` and `sched_dep_time` would introduce redundancy without adding unique information, so `minute` will be excluded.
-5. **hour**: Similar to `minute`, `hour` is also part of the `sched_dep_time` feature. As it does not contribute additional information beyond what `sched_dep_time` provides, it will be removed to avoid redundancy.
-6. **carrier**: The `carrier` feature represents a two-letter airline code, while the `name` feature contains the full name of the airline. Since these features provide overlapping information, we will retain `name` (as it is more descriptive) and remove `carrier` to avoid redundancy.
-7. **year**: Since all flights in this dataset took place in 2013, `year` is a constant feature and does not contribute to the model’s predictive power. A constant feature cannot help the model distinguish between records, so it will be removed.
-8. **flight**: The `flight` feature, representing designated flight numbers, has many unique values (3844). Although specific flights might have delay patterns, the high dimensionality of `flight` could lead to overfitting. Consequently, `flight` will be excluded from the dataset to maintain model generalizability.
-   
+  
 ## Step 6.1 Correlation between Numerical Features
 
 - A logical relationship between weather variables and flight delays was investigated.
@@ -638,6 +674,7 @@ plt.xticks(rotation=45, ha="right")
 plt.tight_layout()
 plt.show()
 ```
+
 
 
 - Identified which routes have the highest probability of falling into the level 1 delay category.
