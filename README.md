@@ -742,7 +742,7 @@ These routes show the highest likelihood of experiencing delays upon arrival.
 | PDX-STL | 0.667                       | 0.500                     |
 | PDX-IDA | 0.444                       | 0.400                     |
 
-```
+```Python
 plt.figure(figsize=(10, 6))
 plt.bar(top_dep_delay_routes['route'], top_dep_delay_routes['dep_delay_prob'], color='red')
 plt.xlabel('Route')
@@ -766,6 +766,224 @@ plt.show()
 - First Plot: The code generates a bar chart showing the probability of departure delays for the top routes. The x-axis represents specific routes, while the y-axis shows the probability of delay. The bars are colored red, and the routes are rotated on the x-axis for readability.
 - Second Plot: The code produces a similar bar chart for the probability of arrival delays on the same routes. This chart follows the same formatting, but the bars are colored blue to distinguish it from the departure delay chart.
 
+# Step 7: Project Questions
+
+1. Create a categorical variable to understand the relationship between each airline and flight distance.
+
+```Python
+bins = [0, 500, 1000, 3000]
+labels = ['Short Distance', 'Medium Distance', 'Long Distance']
+
+df_cleaned['distance_category'] = pd.cut(df_cleaned['distance'], bins=bins, labels=labels)
+df_cleaned['distance_category']
+```
+
+
+
+2. Classify flight distances into three main groups: distances under 500 miles, distances between 500-1000 miles, and distances of 1000 miles and above.
+   
+```Python
+bins = [0, 500, 1000, float('inf')]
+labels = ['Under 500 miles', '500-1000 miles', 'Above 1000 miles']
+
+df_cleaned['distance_category2'] = pd.cut(df_cleaned['distance'], bins=bins, labels=labels)
+df_cleaned['distance_category2']
+```
+
+
+
+
+
+3. Identify the airlines with the highest number of flights conducted.
+
+```Python
+max_flyer = df_cleaned.groupby("airline")["distance"].sum().sort_values(ascending=False)
+max_flyer
+```
+
+Below is the cumulative distance flown by each airline, showing their relative flight activity in miles.
+
+| Airline                     | Total Distance Flown (Miles) |
+|-----------------------------|------------------------------|
+| Alaska Airlines Inc.        | 52,832,566                   |
+| Delta Air Lines Inc.        | 23,502,339                   |
+| United Air Lines Inc.       | 8,418,462                    |
+| SkyWest Airlines Inc.       | 7,236,636                    |
+| Horizon Air                 | 6,933,990                    |
+| American Airlines Inc.      | 6,179,705                    |
+| Southwest Airlines Co.      | 5,880,952                    |
+| Hawaiian Airlines Inc.      | 1,889,778                    |
+| JetBlue Airways             | 1,542,234                    |
+| Spirit Air Lines            | 665,145                      |
+| Frontier Airlines Inc.      | 401,619                      |
+| Allegiant Air               | 100,247                      |
+
+This data highlights Alaska Airlines Inc. as the airline with the highest total distance flown, followed by Delta Air Lines Inc. and United Air Lines Inc.
+
+
+```Python
+max_flyer = df_cleaned.groupby("airline")["distance"].sum().sort_values(ascending=False)
+
+plt.figure(figsize=(10, 6))
+max_flyer.plot(kind='bar', color='darkgreen')
+plt.title('Total Distance Flown by Airlines')
+plt.xlabel('Airline')
+plt.ylabel('Total Distance (units)')
+plt.xticks(rotation=45)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+```
+
+4. Compare the performance of airlines based on delays.
+
+```Python
+avg_dep_delay = df_cleaned.groupby("airline")["dep_delay"].mean().reset_index()
+avg_dep_delay.columns = ['airline', 'avg_dep_delay']
+
+avg_arr_delay = df_cleaned.groupby("airline")["arr_delay"].mean().reset_index()
+avg_arr_delay.columns = ['airline', 'avg_arr_delay']
+
+airline_performance = pd.merge(avg_dep_delay, avg_arr_delay, on='airline')
+print(airline_performance)
+```
+
+This table shows the average departure and arrival delays (in minutes) for each airline, providing insights into their overall performance.
+
+| Airline                    | Average Departure Delay (mins) | Average Arrival Delay (mins) |
+|----------------------------|--------------------------------|------------------------------|
+| Alaska Airlines Inc.       | 6.73                           | 2.65                         |
+| Allegiant Air              | 26.77                          | 22.22                        |
+| American Airlines Inc.     | 20.18                          | 9.04                         |
+| Delta Air Lines Inc.       | 10.63                          | 0.91                         |
+| Frontier Airlines Inc.     | 14.25                          | 10.98                        |
+| Hawaiian Airlines Inc.     | 8.24                           | 4.63                         |
+| Horizon Air                | 6.25                           | 4.20                         |
+| JetBlue Airways            | 42.11                          | 31.23                        |
+| SkyWest Airlines Inc.      | 4.61
+
+
+```Python
+airlines = airline_performance['airline']
+avg_dep_delays = airline_performance['avg_dep_delay']
+avg_arr_delays = airline_performance['avg_arr_delay']
+
+fig, ax = plt.subplots(figsize=(10, 8))
+bar_width = 0.4
+index = np.arange(len(airlines))
+
+bar1 = ax.bar(index, avg_dep_delays, bar_width, label='Average Departure Delay', color='skyblue')
+bar2 = ax.bar(index + bar_width, avg_arr_delays, bar_width, label='Average Arrival Delay', color='lightgreen')
+
+ax.set_xlabel('Airlines')
+ax.set_ylabel('Average Delay (minutes)')
+ax.set_title('Average Departure and Arrival Delays by Airline')
+ax.set_xticks(index + bar_width / 2)
+ax.set_xticklabels(airlines, rotation=45, ha='right')
+ax.legend()
+plt.tight_layout()
+plt.show()
+```
+
+
+5. Examine whether airline performance varies across different months of the year, and show the top 5 airlines with the best performance and the bottom 5 with the worst performance.
+
+```Python
+df_cleaned['date'] = pd.to_datetime(df_cleaned['date'])
+df_cleaned['year'] = df_cleaned['date'].dt.year
+df_cleaned['month'] = df_cleaned['date'].dt.month
+
+monthly_airline_performance = df_cleaned.groupby(['year', 'month', 'airline'])['dep_delay'].mean().reset_index()
+print(monthly_airline_performance)
+```
+# Monthly Average Departure Delay by Airline (2022)
+
+This table shows the average departure delay for each airline, broken down by month for 2022. This data helps to identify any seasonal trends in delays.
+
+| Year | Month | Airline                   | Average Departure Delay (mins) |
+|------|-------|----------------------------|---------------------------------|
+| 2022 | 1     | Alaska Airlines Inc.       | 8.84                            |
+| 2022 | 1     | Allegiant Air              | 11.88                           |
+| 2022 | 1     | American Airlines Inc.     | 19.53                           |
+| 2022 | 1     | Delta Air Lines Inc.       | 10.60                           |
+| 2022 | 1     | Frontier Airlines Inc.     | 18.14                           |
+| ...  | ...   | ...                        | ...                             |
+| 2022 | 6     | JetBlue Airways            | 66.88                           |
+| 2022 | 6     | SkyWest Airlines Inc.      | 3.79                            |
+| 2022 | 6     | Southwest Airlines Co.     | 13.81                           |
+| 2022 | 6     | Spirit Air Lines           | 18.12                           |
+| 2022 | 6     | United Air Lines Inc.      | 7.95                            |
+
+_Note: Only a subset of the data is shown here. The complete data includes monthly average departure delays for all airlines from January to June 2022._
+
+```Python
+monthly_airline_performance = monthly_airline_performance.sort_values(by=['year', 'month'])
+plt.figure(figsize=(12, 8))
+for airline in monthly_airline_performance['airline'].unique():
+    data = monthly_airline_performance[monthly_airline_performance['airline'] == airline]
+    plt.plot(data['year'].astype(str) + '-' + data['month'].astype(str).str.zfill(2), data['dep_delay'], marker='o', label=airline)
+
+plt.xlabel('Year-Month')
+plt.ylabel('Average Departure Delay (minutes)')
+plt.title('Monthly Average Departure Delay by Airline')
+plt.xticks(rotation=45)
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+```
+```Python
+df_cleaned['date'] = pd.to_datetime(df_cleaned['date'])
+df_cleaned['year'] = df_cleaned['date'].dt.year
+df_cleaned['month'] = df_cleaned['date'].dt.month
+
+monthly_airline_performance2 = df_cleaned.groupby(['year', 'month', 'airline'])['arr_delay'].mean().reset_index()
+print(monthly_airline_performance2)
+```
+
+# Monthly Average Arrival Delay by Airline (2022)
+
+This table presents the average arrival delay for each airline, broken down by month for 2022. This data helps in identifying arrival delay trends across different months and airlines.
+
+| Year | Month | Airline                   | Average Arrival Delay (mins) |
+|------|-------|----------------------------|------------------------------|
+| 2022 | 1     | Alaska Airlines Inc.       | 4.13                         |
+| 2022 | 1     | Allegiant Air              | 8.75                         |
+| 2022 | 1     | American Airlines Inc.     | 5.20                         |
+| 2022 | 1     | Delta Air Lines Inc.       | 0.14                         |
+| 2022 | 1     | Frontier Airlines Inc.     | 13.82                        |
+| ...  | ...   | ...                        | ...                          |
+| 2022 | 6     | JetBlue Airways            | 56.77                        |
+| 2022 | 6     | SkyWest Airlines Inc.      | -0.48                        |
+| 2022 | 6     | Southwest Airlines Co.     | 5.93                         |
+| 2022 | 6     | Spirit Air Lines           | 13.97                        |
+| 2022 | 6     | United Air Lines Inc.      | -3.73                        |
+
+_Note: Only a subset of the data is shown here. The complete dataset includes monthly average arrival delays for all airlines from January to June 2022._
+
+This breakdown enables an analysis of arrival delay patterns for each airline, providing insight into months where airlines perform better or worse in terms of punctuality.
+
+
+```Python
+monthly_airline_performance2 = monthly_airline_performance2.sort_values(by=['year', 'month'])
+plt.figure(figsize=(12, 8))
+for airline in monthly_airline_performance2['airline'].unique():
+    data = monthly_airline_performance2[monthly_airline_performance2['airline'] == airline]
+    plt.plot(data['year'].astype(str) + '-' + data['month'].astype(str).str.zfill(2), data['arr_delay'], marker='o', label=airline)
+    
+plt.xlabel('Year-Month')
+plt.ylabel('Average Arrival Delay (minutes)')
+plt.title('Monthly Average Arrival Delay by Airline')
+plt.xticks(rotation=45)
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+```
+
+6. Determine the percentage of flight cancellations and display how this varies by airline.
+7. Is there a specific time of day and/or time of year with higher delay durations?
+8. Which routes have the highest delay durations?
 
 
 
