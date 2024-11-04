@@ -248,7 +248,7 @@ df.describe(include='object')
 
 
 
-#Step 4: Exploratory Data Analysis
+# Step 4: Exploratory Data Analysis
 
 ## Step 4.1 Univariate Analysis
 We can perform univariate analysis on these columns based on their datatype:
