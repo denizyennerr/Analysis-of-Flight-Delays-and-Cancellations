@@ -329,7 +329,48 @@ for col in categorical_columns:
 # Step 5: Data Preprocessing
 ## Step 5.1: Missing Value Treatment
 
+```Python
+df.columns
 ```
+# Flight Dataset Columns
+
+The dataset contains information on flights, including schedule, delay, and weather data. Below is a list of columns included:
+
+| Column            | Description                                              |
+|-------------------|----------------------------------------------------------|
+| **year**          | Year of the flight (e.g., 2022)                          |
+| **month**         | Month of the flight (1-12)                               |
+| **day**           | Day of the month (1-31)                                  |
+| **dep_time**      | Actual departure time (in HHMM format)                   |
+| **sched_dep_time**| Scheduled departure time (in HHMM format)                |
+| **dep_delay**     | Departure delay in minutes                               |
+| **arr_time**      | Actual arrival time (in HHMM format)                     |
+| **sched_arr_time**| Scheduled arrival time (in HHMM format)                  |
+| **arr_delay**     | Arrival delay in minutes                                 |
+| **carrier**       | Airline carrier code (e.g., AA for American Airlines)    |
+| **flight**        | Flight number                                            |
+| **tailnum**       | Aircraft tail number                                     |
+| **origin**        | Origin airport code                                      |
+| **dest**          | Destination airport code                                 |
+| **air_time**      | Time spent in the air (in minutes)                       |
+| **distance**      | Distance between origin and destination (in miles)       |
+| **hour**          | Hour of scheduled departure (24-hour format)             |
+| **minute**        | Minute of scheduled departure                            |
+| **airline**       | Full airline name                                        |
+| **route**         | Route from origin to destination (origin-destination)    |
+| **temp**          | Temperature at departure airport (in °F)                 |
+| **dewp**          | Dew point temperature (in °F)                            |
+| **humid**         | Humidity percentage                                      |
+| **wind_dir**      | Wind direction (in degrees)                              |
+| **wind_speed**    | Wind speed (in mph)                                      |
+| **wind_gust**     | Wind gust speed (in mph)                                 |
+| **precip**        | Precipitation amount (in inches)                         |
+| **pressure**      | Atmospheric pressure (in millibars)                      |
+| **visib**         | Visibility (in miles)                                    |
+
+
+      
+```Python
 df['sched_dep_time'] = df['sched_dep_time'].astype(str).str.zfill(4)
 df['sched_dep_time']= pd.to_datetime(df['sched_dep_time'], format="%H%M").dt.time.astype(str).str[:5]
 df.head(7)
