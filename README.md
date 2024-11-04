@@ -4,6 +4,7 @@
 
 - [Project Overview](#project-overview)
 - [Project Details](#project-details)
+- [Project Questions](#project-questions)
 - [Data Sources](#data-sources)
 - [Tools](#tools)
 - [Python Libraries](#python-libraries)
@@ -28,6 +29,16 @@ The objective of this project is to analyze a comprehensive dataset containing f
 - Determined which airlines perform the best.
 - Analyzed whether flight performance varies by month, whether a certain airline consistently performs poorly, or if performance fluctuates.
 - Identified which routes have the highest probability of falling into the level 1 delay category.
+
+### Project Questions:
+1. Create a categorical variable to understand the relationship between each airline and flight distance.
+2. Classify flight distances into three main groups: distances under 500 miles, distances between 500-1000 miles, and distances of 1000 miles and above.
+3. Identify the airlines with the highest number of flights conducted.
+4. Compare the performance of airlines based on delays.
+5. Examine whether airline performance varies across different months of the year, and show the top 5 airlines with the best performance and the bottom 5 with the worst performance.
+6. Determine the percentage of flight cancellations and display how this varies by airline.
+7. Is there a specific time of day and/or time of year with higher delay durations?
+8. Which routes have the highest delay durations?
 
 ### Data Sources
 - Airline Flight Delay and Cancellation Data, August 2019 - August 2023 obtained from the US Department of Transportation, Bureau of Transportation Statistics.
@@ -678,10 +689,82 @@ plt.show()
 
 
 - Identified which routes have the highest probability of falling into the level 1 delay category.
+```Python
+df['dep_delay'] = df['dep_delay'].apply(lambda x: max(0, x))
+df['arr_delay'] = df['arr_delay'].apply(lambda x: max(0, x))
 
+df['dep_delay_cat'] = pd.qcut(df['dep_delay'], 5, labels=False, duplicates='drop')
+df['arr_delay_cat'] = pd.qcut(df['arr_delay'], 5, labels=False, duplicates='drop')
 
+max_dep_delay_cat = df['dep_delay_cat'].max()
+max_arr_delay_cat = df['arr_delay_cat'].max()
 
+df['dep_delay_level1'] = df['dep_delay_cat'] == max_dep_delay_cat
+df['arr_delay_level1'] = df['arr_delay_cat'] == max_arr_delay_cat
 
+df['route'] = df['origin'] + '-' + df['dest']
+
+route_delay_prob = df.groupby('route').agg(
+    dep_delay_prob=('dep_delay_level1', 'mean'),
+    arr_delay_prob=('arr_delay_level1', 'mean')
+).reset_index()
+
+top_dep_delay_routes = route_delay_prob.nlargest(5, 'dep_delay_prob')
+top_arr_delay_routes = route_delay_prob.nlargest(5, 'arr_delay_prob')
+
+print("Level 1: Routes with the highest probability of departure delay")
+print(top_dep_delay_routes)
+
+print("Level 1: Routes with the highest probability of arrival delay")
+print(top_arr_delay_routes)
+```
+# Level 1 Analysis: Routes with the Highest Probability of Delay
+
+### Routes with the Highest Probability of Departure Delay
+These routes have the highest likelihood of experiencing a delay upon departure.
+
+| Route   | Departure Delay Probability | Arrival Delay Probability |
+|---------|-----------------------------|---------------------------|
+| PDX-DSM | 0.739                       | 0.696                     |
+| PDX-GRR | 0.739                       | 0.696                     |
+| PDX-DAL | 0.700                       | 0.700                     |
+| PDX-STL | 0.667                       | 0.500                     |
+| PDX-IDA | 0.444                       | 0.400                     |
+
+### Routes with the Highest Probability of Arrival Delay
+These routes show the highest likelihood of experiencing delays upon arrival.
+
+| Route   | Departure Delay Probability | Arrival Delay Probability |
+|---------|-----------------------------|---------------------------|
+| PDX-DAL | 0.700                       | 0.700                     |
+| PDX-DSM | 0.739                       | 0.696                     |
+| PDX-GRR | 0.739                       | 0.696                     |
+| PDX-STL | 0.667                       | 0.500                     |
+| PDX-IDA | 0.444                       | 0.400                     |
+
+```
+plt.figure(figsize=(10, 6))
+plt.bar(top_dep_delay_routes['route'], top_dep_delay_routes['dep_delay_prob'], color='red')
+plt.xlabel('Route')
+plt.ylabel('Probability of Departure Delay (Level 1)')
+plt.title('Routes with the Highest Probability of Departure Delay (Level 1)')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+plt.figure(figsize=(10, 6))
+plt.bar(top_arr_delay_routes['route'], top_arr_delay_routes['arr_delay_prob'], color='blue')
+plt.xlabel('Route')
+plt.ylabel('Probability of Arrival Delay (Level 1)')
+plt.title('Routes with the Highest Probability of Arrival Delay (Level 1)')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+```
+- This code creates bar charts to visualize the routes with the highest probabilities of experiencing delays, separated by departure and arrival delays.
+- First Plot: The code generates a bar chart showing the probability of departure delays for the top routes. The x-axis represents specific routes, while the y-axis shows the probability of delay. The bars are colored red, and the routes are rotated on the x-axis for readability.
+- Second Plot: The code produces a similar bar chart for the probability of arrival delays on the same routes. This chart follows the same formatting, but the bars are colored blue to distinguish it from the departure delay chart.
 
 
 
