@@ -326,7 +326,133 @@ for col in categorical_columns:
 
 ```
 
-### Project Details
+# Step 5: Data Preprocessing
+## Step 5.1: Missing Value Treatment
+
+```
+df['sched_dep_time'] = df['sched_dep_time'].astype(str).str.zfill(4)
+df['sched_dep_time']= pd.to_datetime(df['sched_dep_time'], format="%H%M").dt.time.astype(str).str[:5]
+df.head(7)
+```
+| date                | dep_time | sched_dep_time | dep_delay | arr_time | sched_arr_time | arr_delay | carrier | flight | tailnum | origin | dest | air_time | distance | airline               | route   | temp | dewp | humid | wind_dir | wind_speed | wind_gust | precip | pressure | visib |
+|---------------------|----------|----------------|-----------|----------|----------------|-----------|---------|--------|---------|--------|------|----------|----------|-----------------------|---------|------|------|-------|----------|------------|-----------|--------|----------|-------|
+| 2022-01-01 23:59:00 | 1.0      | 23:59         | 2.0       | 604.0    | 618            | -14.0     | UA      | 555    | N405UA  | SEA    | IAH  | 221.0    | 1874     | United Air Lines Inc. | SEA-IAH | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 2022-01-01 22:50:00 | 1.0      | 22:50         | 71.0      | 242.0    | 142            | 60.0      | AS      | 72     | N265AK  | SEA    | FAI  | 193.0    | 1533     | Alaska Airlines Inc.  | SEA-FAI | 32.0 | 23.0 | 69.04 | 170.0    | 9.20624    | 10.594357 | 0.0    | 1023.4   | 10.0  |
+| 2022-01-01 23:55:00 | 10.0     | 23:55         | 15.0      | 759.0    | 730            | 29.0      | AS      | 270    | N274AK  | SEA    | ATL  | 261.0    | 2182     | Alaska Airlines Inc.  | SEA-ATL | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 2022-01-01 23:50:00 | 25.0     | 23:50         | 35.0      | 606.0    | 550            | 16.0      | AS      | 7      | N281AK  | SEA    | ORD  | 193.0    | 1721     | Alaska Airlines Inc.  | SEA-ORD | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 2022-01-01 23:49:00 | 35.0     | 23:49         | 46.0      | 616.0    | 545            | 31.0      | UA      | 507    | N426UA  | PDX    | ORD  | 196.0    | 1739     | United Air Lines Inc. | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
+| 2022-01-01 23:52:00 | 51.0     | 23:52         | 59.0      | 840.0    | 758            | 42.0      | B6      | 366    | N625JB  | PDX    | JFK  | 269.0    | 2454     | JetBlue Airways       | PDX-JFK | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
+| 2022-01-01 00:43:00 | 104.0    | 00:43         | 21.0      | 936.0    | 930            | 6.0       | AA      | 501    | N413AN  | SEA    | MIA  | 312.0    | 2724     | American Airlines Inc.| SEA-MIA | 25.0 | 14.0 | 62.50 | 350.0    | 8.05546    | 9.270062  | 0.0    | 1020.7   | 10.0  |
+
+
+```Python
+df['sched_arr_time'] = df['sched_arr_time'].astype(str).str.zfill(4)
+df['sched_arr_time']= pd.to_datetime(df['sched_arr_time'], format="%H%M").dt.time.astype(str).str[:5]
+df.head()
+```
+
+| date                | dep_time | sched_dep_time | dep_delay | arr_time | sched_arr_time | arr_delay | carrier | flight | tailnum | origin | dest | air_time | distance | airline               | route   | temp | dewp | humid | wind_dir | wind_speed | wind_gust | precip | pressure | visib |
+|---------------------|----------|----------------|-----------|----------|----------------|-----------|---------|--------|---------|--------|------|----------|----------|-----------------------|---------|------|------|-------|----------|------------|-----------|--------|----------|-------|
+| 2022-01-01 23:59:00 | 1.0      | 23:59         | 2.0       | 604.0    | 06:18          | -14.0     | UA      | 555    | N405UA  | SEA    | IAH  | 221.0    | 1874     | United Air Lines Inc. | SEA-IAH | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 2022-01-01 22:50:00 | 1.0      | 22:50         | 71.0      | 242.0    | 01:42          | 60.0      | AS      | 72     | N265AK  | SEA    | FAI  | 193.0    | 1533     | Alaska Airlines Inc.  | SEA-FAI | 32.0 | 23.0 | 69.04 | 170.0    | 9.20624    | 10.594357 | 0.0    | 1023.4   | 10.0  |
+| 2022-01-01 23:55:00 | 10.0     | 23:55         | 15.0      | 759.0    | 07:30          | 29.0      | AS      | 270    | N274AK  | SEA    | ATL  | 261.0    | 2182     | Alaska Airlines Inc.  | SEA-ATL | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 2022-01-01 23:50:00 | 25.0     | 23:50         | 35.0      | 606.0    | 05:50          | 16.0      | AS      | 7      | N281AK  | SEA    | ORD  | 193.0    | 1721     | Alaska Airlines Inc.  | SEA-ORD | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 2022-01-01 23:49:00 | 35.0     | 23:49         | 46.0      | 616.0    | 05:45          | 31.0      | UA      | 507    | N426UA  | PDX    | ORD  | 196.0    | 1739     | United Air Lines Inc. | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
+
+```Python
+df['arr_time'] = pd.to_numeric(df['arr_time'], errors='coerce')
+df = df.replace([np.inf, -np.inf], np.nan).dropna(subset=['arr_time'])
+df['arr_time'] = df['arr_time'].astype(int)
+df.head(6)
+```
+
+| date                | dep_time | sched_dep_time | dep_delay | arr_time | sched_arr_time | arr_delay | carrier | flight | tailnum | origin | dest | air_time | distance | airline               | route   | temp | dewp | humid | wind_dir | wind_speed | wind_gust | precip | pressure | visib |
+|---------------------|----------|----------------|-----------|----------|----------------|-----------|---------|--------|---------|--------|------|----------|----------|-----------------------|---------|------|------|-------|----------|------------|-----------|--------|----------|-------|
+| 2022-01-01 23:59:00 | 1.0      | 23:59         | 2.0       | 604      | 06:18          | -14.0     | UA      | 555    | N405UA  | SEA    | IAH  | 221.0    | 1874     | United Air Lines Inc. | SEA-IAH | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 2022-01-01 22:50:00 | 1.0      | 22:50         | 71.0      | 242      | 01:42          | 60.0      | AS      | 72     | N265AK  | SEA    | FAI  | 193.0    | 1533     | Alaska Airlines Inc.  | SEA-FAI | 32.0 | 23.0 | 69.04 | 170.0    | 9.20624    | 10.594357 | 0.0    | 1023.4   | 10.0  |
+| 2022-01-01 23:55:00 | 10.0     | 23:55         | 15.0      | 759      | 07:30          | 29.0      | AS      | 270    | N274AK  | SEA    | ATL  | 261.0    | 2182     | Alaska Airlines Inc.  | SEA-ATL | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 2022-01-01 23:50:00 | 25.0     | 23:50         | 35.0      | 606      | 05:50          | 16.0      | AS      | 7      | N281AK  | SEA    | ORD  | 193.0    | 1721     | Alaska Airlines Inc.  | SEA-ORD | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 2022-01-01 23:49:00 | 35.0     | 23:49         | 46.0      | 616      | 05:45          | 31.0      | UA      | 507    | N426UA  | PDX    | ORD  | 196.0    | 1739     | United Air Lines Inc. | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
+| 2022-01-01 23:52:00 | 51.0     | 23:52         | 59.0      | 840      | 07:58          | 42.0      | B6      | 366    | N625JB  | PDX    | JFK  | 269.0    | 2454     | JetBlue Airways       | PDX-JFK | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
+
+```Python
+df['arr_time']=df['arr_time'].astype(str).str.zfill(4)
+df['arr_time']
+
+df['arr_time']=df['arr_time'].astype(str).str.zfill(4)
+df['arr_time']
+
+df['arr_time'] = df['arr_time'].str.strip()
+df_filtered = df[df['arr_time'].str.isnumeric()]
+
+try:
+  df['arr_time'] = pd.to_datetime(df_filtered['arr_time'], format="%H%M", errors='coerce')
+except ValueError:
+  pass
+
+df['arr_time'] = df['arr_time'].dt.time.astype(str).str[:5]
+
+df.head()
+```
+
+| date                | dep_time | sched_dep_time | dep_delay | arr_time | sched_arr_time | arr_delay | carrier | flight | tailnum | route   | temp | dewp | humid | wind_dir | wind_speed | wind_gust | precip | pressure | visib |
+|---------------------|----------|----------------|-----------|----------|----------------|-----------|---------|--------|---------|---------|------|------|-------|----------|------------|-----------|--------|----------|-------|
+| 2022-01-01 23:59:00 | 00:01    | 23:59         | 2.0       | NaT      | 06:18          | -14.0     | UA      | 555    | N405UA  | SEA-IAH | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 2022-01-01 22:50:00 | 00:01    | 22:50         | 71.0      | NaT      | 01:42          | 60.0      | AS      | 72     | N265AK  | SEA-FAI | 32.0 | 23.0 | 69.04 | 170.0    | 9.20624    | 10.594357 | 0.0    | 1023.4   | 10.0  |
+| 2022-01-01 23:55:00 | 00:10    | 23:55         | 15.0      | NaT      | 07:30          | 29.0      | AS      | 270    | N274AK  | SEA-ATL | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 2022-01-01 23:50:00 | 00:25    | 23:50         | 35.0      | NaT      | 05:50          | 16.0      | AS      | 7      | N281AK  | SEA-ORD | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 2022-01-01 23:49:00 | 00:35    | 23:49         | 46.0      | NaT      | 05:45          | 31.0      | UA      | 507    | N426UA  | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
+
+```Python
+df['arr_delay'] = df['arr_delay'].fillna(0)
+
+df['arr_delay'] = df['arr_delay'].astype(int)
+df['arr_delay']
+
+df['dep_delay'] = df['dep_delay'].fillna(0)
+
+df['dep_delay'] = df['dep_delay'].astype(int)
+df['dep_delay']
+```
+```
+pd.set_option('display.max_columns', None)
+df.head()
+```
+| date                | dep_time | sched_dep_time | dep_delay | arr_time | sched_arr_time | arr_delay | carrier | flight | tailnum | origin | dest | air_time | distance | airline               | route   | temp | dewp | humid | wind_dir | wind_speed | wind_gust | precip | pressure | visib |
+|---------------------|----------|----------------|-----------|----------|----------------|-----------|---------|--------|---------|--------|------|----------|----------|-----------------------|---------|------|------|-------|----------|------------|-----------|--------|----------|-------|
+| 2022-01-01 23:59:00 | 00:01    | 23:59         | 2         | NaT      | 06:18          | -14       | UA      | 555    | N405UA  | SEA    | IAH  | 221.0    | 1874     | United Air Lines Inc. | SEA-IAH | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 2022-01-01 22:50:00 | 00:01    | 22:50         | 71        | NaT      | 01:42          | 60        | AS      | 72     | N265AK  | SEA    | FAI  | 193.0    | 1533     | Alaska Airlines Inc.  | SEA-FAI | 32.0 | 23.0 | 69.04 | 170.0    | 9.20624    | 10.594357 | 0.0    | 1023.4   | 10.0  |
+| 2022-01-01 23:55:00 | 00:10    | 23:55         | 15        | NaT      | 07:30          | 29        | AS      | 270    | N274AK  | SEA    | ATL  | 261.0    | 2182     | Alaska Airlines Inc.  | SEA-ATL | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 2022-01-01 23:50:00 | 00:25    | 23:50         | 35        | NaT      | 05:50          | 16        | AS      | 7      | N281AK  | SEA    | ORD  | 193.0    | 1721     | Alaska Airlines Inc.  | SEA-ORD | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 2022-01-01 23:49:00 | 00:35    | 23:49         | 46        | NaT      | 05:45          | 31        | UA      | 507    | N426UA  | PDX    | ORD  | 196.0    | 1739     | United Air Lines Inc. | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
+
+
+## Step 5.2: Irrelevant Feature Removal
+
+```Python
+duplicates = df.duplicated()
+duplicates
+```
+```Python
+duplicate_rows = df[duplicates]
+duplicate_rows
+```
+
+```Python
+df_cleaned = df.drop_duplicates()
+df_cleaned
+```
+
+| Index | date                | dep_time | sched_dep_time | dep_delay | arr_time | sched_arr_time | arr_delay | carrier | flight | tailnum | origin | dest | air_time | distance | airline               | route   | temp | dewp | humid | wind_dir | wind_speed | wind_gust | precip | pressure | visib |
+|-------|----------------------|----------|----------------|-----------|----------|----------------|-----------|---------|--------|---------|--------|------|----------|----------|-----------------------|---------|------|------|-------|----------|------------|-----------|--------|----------|-------|
+| 0     | 2022-01-01 23:59:00 | 00:01    | 23:59         | 2         | 06:04    | 06:18          | -14       | UA      | 555    | N405UA  | SEA    | IAH  | 221.0    | 1874     | United Air Lines Inc. | SEA-IAH | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 1     | 2022-01-01 22:50:00 | 00:01    | 22:50         | 71        | 02:42    | 01:42          | 60        | AS      | 72     | N265AK  | SEA    | FAI  | 193.0    | 1533     | Alaska Airlines Inc.  | SEA-FAI | 32.0 | 23.0 | 69.04 | 170.0    | 9.20624    | 10.594357 | 0.0    | 1023.4   | 10.0  |
+| 2     | 2022-01-01 23:55:00 | 00:10    | 23:55         | 15        | 07:59    | 07:30          | 29        | AS      | 270    | N274AK  | SEA    | ATL  | 261.0    | 2182     | Alaska Airlines Inc.  | SEA-ATL | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 3     | 2022-01-01 23:50:00 | 00:25    | 23:50         | 35        | 06:06    | 05:50          | 16        | AS      | 7      | N281AK  | SEA    | ORD  | 193.0    | 1721     | Alaska Airlines Inc.  | SEA-ORD | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
+| 4     | 2022-01-01 23:49:00 | 00:35    | 23:49         | 46        | 06:16    | 05:45          | 31        | UA      | 507    | N426UA  | PDX    | ORD  | 196.0    | 1739     | United Air Lines Inc. | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
+
+
+#Step 6: Project Details
 - A date-time index was created for Time Series Analysis and Forecasting, allowing for more effective plotting and time series evaluations. 
 - Departure and arrival times were corrected to ensure the accuracy of the data.
 - Duplicates were checked to identify any inconsistencies or repeated information within the dataset.
@@ -357,132 +483,6 @@ Interference:
 6. **carrier**: The `carrier` feature represents a two-letter airline code, while the `name` feature contains the full name of the airline. Since these features provide overlapping information, we will retain `name` (as it is more descriptive) and remove `carrier` to avoid redundancy.
 7. **year**: Since all flights in this dataset took place in 2013, `year` is a constant feature and does not contribute to the model’s predictive power. A constant feature cannot help the model distinguish between records, so it will be removed.
 8. **flight**: The `flight` feature, representing designated flight numbers, has many unique values (3844). Although specific flights might have delay patterns, the high dimensionality of `flight` could lead to overfitting. Consequently, `flight` will be excluded from the dataset to maintain model generalizability.
-
-# Step 5: Data Preprocessing
-# Step 5.1: Missing Value Treatment
-
-```
-df['sched_dep_time'] = df['sched_dep_time'].astype(str).str.zfill(4)
-df['sched_dep_time']= pd.to_datetime(df['sched_dep_time'], format="%H%M").dt.time.astype(str).str[:5]
-df.head(7)
-```
-| date                | dep_time | sched_dep_time | dep_delay | arr_time | sched_arr_time | arr_delay | carrier | flight | tailnum | origin | dest | air_time | distance | airline               | route   | temp | dewp | humid | wind_dir | wind_speed | wind_gust | precip | pressure | visib |
-|---------------------|----------|----------------|-----------|----------|----------------|-----------|---------|--------|---------|--------|------|----------|----------|-----------------------|---------|------|------|-------|----------|------------|-----------|--------|----------|-------|
-| 2022-01-01 23:59:00 | 1.0      | 23:59         | 2.0       | 604.0    | 618            | -14.0     | UA      | 555    | N405UA  | SEA    | IAH  | 221.0    | 1874     | United Air Lines Inc. | SEA-IAH | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
-| 2022-01-01 22:50:00 | 1.0      | 22:50         | 71.0      | 242.0    | 142            | 60.0      | AS      | 72     | N265AK  | SEA    | FAI  | 193.0    | 1533     | Alaska Airlines Inc.  | SEA-FAI | 32.0 | 23.0 | 69.04 | 170.0    | 9.20624    | 10.594357 | 0.0    | 1023.4   | 10.0  |
-| 2022-01-01 23:55:00 | 10.0     | 23:55         | 15.0      | 759.0    | 730            | 29.0      | AS      | 270    | N274AK  | SEA    | ATL  | 261.0    | 2182     | Alaska Airlines Inc.  | SEA-ATL | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
-| 2022-01-01 23:50:00 | 25.0     | 23:50         | 35.0      | 606.0    | 550            | 16.0      | AS      | 7      | N281AK  | SEA    | ORD  | 193.0    | 1721     | Alaska Airlines Inc.  | SEA-ORD | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
-| 2022-01-01 23:49:00 | 35.0     | 23:49         | 46.0      | 616.0    | 545            | 31.0      | UA      | 507    | N426UA  | PDX    | ORD  | 196.0    | 1739     | United Air Lines Inc. | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
-| 2022-01-01 23:52:00 | 51.0     | 23:52         | 59.0      | 840.0    | 758            | 42.0      | B6      | 366    | N625JB  | PDX    | JFK  | 269.0    | 2454     | JetBlue Airways       | PDX-JFK | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
-| 2022-01-01 00:43:00 | 104.0    | 00:43         | 21.0      | 936.0    | 930            | 6.0       | AA      | 501    | N413AN  | SEA    | MIA  | 312.0    | 2724     | American Airlines Inc.| SEA-MIA | 25.0 | 14.0 | 62.50 | 350.0    | 8.05546    | 9.270062  | 0.0    | 1020.7   | 10.0  |
-
-
-```
-df['sched_arr_time'] = df['sched_arr_time'].astype(str).str.zfill(4)
-df['sched_arr_time']= pd.to_datetime(df['sched_arr_time'], format="%H%M").dt.time.astype(str).str[:5]
-df.head()
-```
-
-| date                | dep_time | sched_dep_time | dep_delay | arr_time | sched_arr_time | arr_delay | carrier | flight | tailnum | origin | dest | air_time | distance | airline               | route   | temp | dewp | humid | wind_dir | wind_speed | wind_gust | precip | pressure | visib |
-|---------------------|----------|----------------|-----------|----------|----------------|-----------|---------|--------|---------|--------|------|----------|----------|-----------------------|---------|------|------|-------|----------|------------|-----------|--------|----------|-------|
-| 2022-01-01 23:59:00 | 1.0      | 23:59         | 2.0       | 604.0    | 06:18          | -14.0     | UA      | 555    | N405UA  | SEA    | IAH  | 221.0    | 1874     | United Air Lines Inc. | SEA-IAH | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
-| 2022-01-01 22:50:00 | 1.0      | 22:50         | 71.0      | 242.0    | 01:42          | 60.0      | AS      | 72     | N265AK  | SEA    | FAI  | 193.0    | 1533     | Alaska Airlines Inc.  | SEA-FAI | 32.0 | 23.0 | 69.04 | 170.0    | 9.20624    | 10.594357 | 0.0    | 1023.4   | 10.0  |
-| 2022-01-01 23:55:00 | 10.0     | 23:55         | 15.0      | 759.0    | 07:30          | 29.0      | AS      | 270    | N274AK  | SEA    | ATL  | 261.0    | 2182     | Alaska Airlines Inc.  | SEA-ATL | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
-| 2022-01-01 23:50:00 | 25.0     | 23:50         | 35.0      | 606.0    | 05:50          | 16.0      | AS      | 7      | N281AK  | SEA    | ORD  | 193.0    | 1721     | Alaska Airlines Inc.  | SEA-ORD | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
-| 2022-01-01 23:49:00 | 35.0     | 23:49         | 46.0      | 616.0    | 05:45          | 31.0      | UA      | 507    | N426UA  | PDX    | ORD  | 196.0    | 1739     | United Air Lines Inc. | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
-
-```
-df['arr_time'] = pd.to_numeric(df['arr_time'], errors='coerce')
-df = df.replace([np.inf, -np.inf], np.nan).dropna(subset=['arr_time'])
-df['arr_time'] = df['arr_time'].astype(int)
-df.head(6)
-```
-| date                | dep_time | sched_dep_time | dep_delay | arr_time | sched_arr_time | arr_delay | carrier | flight | tailnum | origin | dest | air_time | distance | airline               | route   | temp | dewp | humid | wind_dir | wind_speed | wind_gust | precip | pressure | visib |
-|---------------------|----------|----------------|-----------|----------|----------------|-----------|---------|--------|---------|--------|------|----------|----------|-----------------------|---------|------|------|-------|----------|------------|-----------|--------|----------|-------|
-| 2022-01-01 23:59:00 | 1.0      | 23:59         | 2.0       | 604      | 06:18          | -14.0     | UA      | 555    | N405UA  | SEA    | IAH  | 221.0    | 1874     | United Air Lines Inc. | SEA-IAH | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
-| 2022-01-01 22:50:00 | 1.0      | 22:50         | 71.0      | 242      | 01:42          | 60.0      | AS      | 72     | N265AK  | SEA    | FAI  | 193.0    | 1533     | Alaska Airlines Inc.  | SEA-FAI | 32.0 | 23.0 | 69.04 | 170.0    | 9.20624    | 10.594357 | 0.0    | 1023.4   | 10.0  |
-| 2022-01-01 23:55:00 | 10.0     | 23:55         | 15.0      | 759      | 07:30          | 29.0      | AS      | 270    | N274AK  | SEA    | ATL  | 261.0    | 2182     | Alaska Airlines Inc.  | SEA-ATL | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
-| 2022-01-01 23:50:00 | 25.0     | 23:50         | 35.0      | 606      | 05:50          | 16.0      | AS      | 7      | N281AK  | SEA    | ORD  | 193.0    | 1721     | Alaska Airlines Inc.  | SEA-ORD | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
-| 2022-01-01 23:49:00 | 35.0     | 23:49         | 46.0      | 616      | 05:45          | 31.0      | UA      | 507    | N426UA  | PDX    | ORD  | 196.0    | 1739     | United Air Lines Inc. | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
-| 2022-01-01 23:52:00 | 51.0     | 23:52         | 59.0      | 840      | 07:58          | 42.0      | B6      | 366    | N625JB  | PDX    | JFK  | 269.0    | 2454     | JetBlue Airways       | PDX-JFK | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
-
-```
-df['arr_time']=df['arr_time'].astype(str).str.zfill(4)
-df['arr_time']
-
-df['arr_time']=df['arr_time'].astype(str).str.zfill(4)
-df['arr_time']
-
-df['arr_time'] = df['arr_time'].str.strip()
-df_filtered = df[df['arr_time'].str.isnumeric()]
-
-try:
-  df['arr_time'] = pd.to_datetime(df_filtered['arr_time'], format="%H%M", errors='coerce')
-except ValueError:
-  pass
-
-df['arr_time'] = df['arr_time'].dt.time.astype(str).str[:5]
-
-df.head()
-```
-
-| date                | dep_time | sched_dep_time | dep_delay | arr_time | sched_arr_time | arr_delay | carrier | flight | tailnum | route   | temp | dewp | humid | wind_dir | wind_speed | wind_gust | precip | pressure | visib |
-|---------------------|----------|----------------|-----------|----------|----------------|-----------|---------|--------|---------|---------|------|------|-------|----------|------------|-----------|--------|----------|-------|
-| 2022-01-01 23:59:00 | 00:01    | 23:59         | 2.0       | NaT      | 06:18          | -14.0     | UA      | 555    | N405UA  | SEA-IAH | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
-| 2022-01-01 22:50:00 | 00:01    | 22:50         | 71.0      | NaT      | 01:42          | 60.0      | AS      | 72     | N265AK  | SEA-FAI | 32.0 | 23.0 | 69.04 | 170.0    | 9.20624    | 10.594357 | 0.0    | 1023.4   | 10.0  |
-| 2022-01-01 23:55:00 | 00:10    | 23:55         | 15.0      | NaT      | 07:30          | 29.0      | AS      | 270    | N274AK  | SEA-ATL | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
-| 2022-01-01 23:50:00 | 00:25    | 23:50         | 35.0      | NaT      | 05:50          | 16.0      | AS      | 7      | N281AK  | SEA-ORD | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
-| 2022-01-01 23:49:00 | 00:35    | 23:49         | 46.0      | NaT      | 05:45          | 31.0      | UA      | 507    | N426UA  | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
-
-```
-df['arr_delay'] = df['arr_delay'].fillna(0)
-
-df['arr_delay'] = df['arr_delay'].astype(int)
-df['arr_delay']
-
-df['dep_delay'] = df['dep_delay'].fillna(0)
-
-df['dep_delay'] = df['dep_delay'].astype(int)
-df['dep_delay']
-```
-```
-pd.set_option('display.max_columns', None)
-df.head()
-```
-| date                | dep_time | sched_dep_time | dep_delay | arr_time | sched_arr_time | arr_delay | carrier | flight | tailnum | origin | dest | air_time | distance | airline               | route   | temp | dewp | humid | wind_dir | wind_speed | wind_gust | precip | pressure | visib |
-|---------------------|----------|----------------|-----------|----------|----------------|-----------|---------|--------|---------|--------|------|----------|----------|-----------------------|---------|------|------|-------|----------|------------|-----------|--------|----------|-------|
-| 2022-01-01 23:59:00 | 00:01    | 23:59         | 2         | NaT      | 06:18          | -14       | UA      | 555    | N405UA  | SEA    | IAH  | 221.0    | 1874     | United Air Lines Inc. | SEA-IAH | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
-| 2022-01-01 22:50:00 | 00:01    | 22:50         | 71        | NaT      | 01:42          | 60        | AS      | 72     | N265AK  | SEA    | FAI  | 193.0    | 1533     | Alaska Airlines Inc.  | SEA-FAI | 32.0 | 23.0 | 69.04 | 170.0    | 9.20624    | 10.594357 | 0.0    | 1023.4   | 10.0  |
-| 2022-01-01 23:55:00 | 00:10    | 23:55         | 15        | NaT      | 07:30          | 29        | AS      | 270    | N274AK  | SEA    | ATL  | 261.0    | 2182     | Alaska Airlines Inc.  | SEA-ATL | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
-| 2022-01-01 23:50:00 | 00:25    | 23:50         | 35        | NaT      | 05:50          | 16        | AS      | 7      | N281AK  | SEA    | ORD  | 193.0    | 1721     | Alaska Airlines Inc.  | SEA-ORD | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
-| 2022-01-01 23:49:00 | 00:35    | 23:49         | 46        | NaT      | 05:45          | 31        | UA      | 507    | N426UA  | PDX    | ORD  | 196.0    | 1739     | United Air Lines Inc. | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
-
-
-## Step 5.2: Irrelevant Feature Removal
-
-```
-duplicates = df.duplicated()
-duplicates
-```
-```
-duplicate_rows = df[duplicates]
-duplicate_rows
-```
-
-```
-df_cleaned = df.drop_duplicates()
-df_cleaned
-```
-| Index | date                | dep_time | sched_dep_time | dep_delay | arr_time | sched_arr_time | arr_delay | carrier | flight | tailnum | origin | dest | air_time | distance | airline               | route   | temp | dewp | humid | wind_dir | wind_speed | wind_gust | precip | pressure | visib |
-|-------|----------------------|----------|----------------|-----------|----------|----------------|-----------|---------|--------|---------|--------|------|----------|----------|-----------------------|---------|------|------|-------|----------|------------|-----------|--------|----------|-------|
-| 0     | 2022-01-01 23:59:00 | 00:01    | 23:59         | 2         | 06:04    | 06:18          | -14       | UA      | 555    | N405UA  | SEA    | IAH  | 221.0    | 1874     | United Air Lines Inc. | SEA-IAH | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
-| 1     | 2022-01-01 22:50:00 | 00:01    | 22:50         | 71        | 02:42    | 01:42          | 60        | AS      | 72     | N265AK  | SEA    | FAI  | 193.0    | 1533     | Alaska Airlines Inc.  | SEA-FAI | 32.0 | 23.0 | 69.04 | 170.0    | 9.20624    | 10.594357 | 0.0    | 1023.4   | 10.0  |
-| 2     | 2022-01-01 23:55:00 | 00:10    | 23:55         | 15        | 07:59    | 07:30          | 29        | AS      | 270    | N274AK  | SEA    | ATL  | 261.0    | 2182     | Alaska Airlines Inc.  | SEA-ATL | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
-| 3     | 2022-01-01 23:50:00 | 00:25    | 23:50         | 35        | 06:06    | 05:50          | 16        | AS      | 7      | N281AK  | SEA    | ORD  | 193.0    | 1721     | Alaska Airlines Inc.  | SEA-ORD | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
-| 4     | 2022-01-01 23:49:00 | 00:35    | 23:49         | 46        | 06:16    | 05:45          | 31        | UA      | 507    | N426UA  | PDX    | ORD  | 196.0    | 1739     | United Air Lines Inc. | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
-
-
-#Step 6: Project Details
 ## Step 6.1 Correlation between Numerical Features
 
 - A logical relationship between weather variables and flight delays was investigated.
@@ -515,10 +515,12 @@ plt.show()
 ```
 
 - Identified which airlines perform the worst in terms of delays.
-```
+  
+```Python
 worst_performer= df_cleaned.groupby("carrier").sum().sort_values(by="dep_delay", ascending=False)
 worst_performer.head(5)
 ```
+
 | carrier | dep_delay | arr_delay | flight   | air_time    | distance | temp     | dewp     | humid       | wind_dir   | wind_speed   | wind_gust    | precip | pressure      | visib      |
 |---------|-----------|-----------|----------|-------------|----------|----------|----------|-------------|------------|--------------|--------------|--------|---------------|------------|
 | AS      | 271775    | 106750    | 8214162  | 6629773.0   | 52832566 | 1926061.4 | 1625351.1 | 3111531.76 | 6408410.0 | 283662.66688 | 326433.323802 | 224.8616 | 41179032.7    | 359443.60  |
@@ -528,10 +530,12 @@ worst_performer.head(5)
 | AA      | 72289     | 32390     | 2066108  | 725827.0    | 6179705  | 172969.2 | 145300.9 | 274049.26  | 576670.0  | 23971.89818  | 27586.380988  | 21.6781 | 3652974.7     | 32388.15   |
 
 - Determined which airlines perform the best.
-```
+  
+```Python
 best_performer= df_cleaned.groupby("carrier").sum().sort_values(by="dep_delay", ascending=True)
 best_performer.head()
 ```
+
 | carrier | dep_delay | arr_delay | flight  | air_time   | distance | temp    | dewp    | humid     | wind_dir | wind_speed  | wind_gust   | precip | pressure  | visib  |
 |---------|-----------|-----------|---------|------------|----------|---------|---------|-----------|----------|-------------|-------------|--------|-----------|--------|
 | G4      | 2436      | 2022      | 17123   | 11995.0    | 100247   | 4675.9  | 3926.6  | 6786.27   | 13710.0  | 530.50958   | 610.499814  | 0.7708 | 92620.2   | 862.25 |
@@ -542,7 +546,8 @@ best_performer.head()
 
 
 - Analyzed whether flight performance varies by month, whether a certain airline consistently performs poorly, or if performance fluctuates.
-```
+  
+```Python
 df['year'] = df_cleaned['date'].dt.year
 df['month'] = df_cleaned['date'].dt.month
 
@@ -550,6 +555,7 @@ monthly_dep_delay = df.groupby(['year', 'month'])['dep_delay'].mean().reset_inde
 
 print(monthly_dep_delay)
 ```
+
 | year | month | dep_delay |
 |------|-------|-----------|
 | 2022 | 1     | 10.804097 |
@@ -559,7 +565,7 @@ print(monthly_dep_delay)
 | 2022 | 5     | 7.127991  |
 | 2022 | 6     | 8.900074  |
 
-```
+```Python
 df['year'] = df_cleaned['date'].dt.year
 df['month'] = df_cleaned['date'].dt.month
 
@@ -567,6 +573,7 @@ monthly_arr_delay = df.groupby(['year', 'month'])['arr_delay'].mean().reset_inde
 
 print(monthly_arr_delay)
 ```
+
 | year | month | arr_delay |
 |------|-------|-----------|
 | 2022 | 1     | 4.648079  |
@@ -576,7 +583,7 @@ print(monthly_arr_delay)
 | 2022 | 5     | 1.708427  |
 | 2022 | 6     | 3.790448  |
 
-```
+```Python
 avg_delay_by_carrier = df_cleaned.groupby("carrier")["dep_delay"].mean()
 
 plt.figure(figsize=(10, 6))
@@ -589,7 +596,6 @@ plt.tight_layout()
 plt.show()
 ```
 
-![image](https://github.com/user-attachments/assets/c1323ccc-8886-4e8c-808a-465c5f68240b)
 
 - Identified which routes have the highest probability of falling into the level 1 delay category.
 
