@@ -452,7 +452,8 @@ df_cleaned
 | 4     | 2022-01-01 23:49:00 | 00:35    | 23:49         | 46        | 06:16    | 05:45          | 31        | UA      | 507    | N426UA  | PDX    | ORD  | 196.0    | 1739     | United Air Lines Inc. | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
 
 
-#Step 6: Project Details
+# Step 6: Project Details
+
 - A date-time index was created for Time Series Analysis and Forecasting, allowing for more effective plotting and time series evaluations. 
 - Departure and arrival times were corrected to ensure the accuracy of the data.
 - Duplicates were checked to identify any inconsistencies or repeated information within the dataset.
@@ -483,6 +484,7 @@ Interference:
 6. **carrier**: The `carrier` feature represents a two-letter airline code, while the `name` feature contains the full name of the airline. Since these features provide overlapping information, we will retain `name` (as it is more descriptive) and remove `carrier` to avoid redundancy.
 7. **year**: Since all flights in this dataset took place in 2013, `year` is a constant feature and does not contribute to the model’s predictive power. A constant feature cannot help the model distinguish between records, so it will be removed.
 8. **flight**: The `flight` feature, representing designated flight numbers, has many unique values (3844). Although specific flights might have delay patterns, the high dimensionality of `flight` could lead to overfitting. Consequently, `flight` will be excluded from the dataset to maintain model generalizability.
+   
 ## Step 6.1 Correlation between Numerical Features
 
 - A logical relationship between weather variables and flight delays was investigated.
