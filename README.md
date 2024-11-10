@@ -999,8 +999,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-
-
+![monthlyavg_dep_delay_airplane](https://github.com/user-attachments/assets/f6b47081-1387-44f9-9c6e-0535deb5faf1)
 
 
 
@@ -1052,6 +1051,8 @@ plt.grid(True)
 plt.tight_layout()
 plt.show()
 ```
+
+![monthlyaveragedelay_byairline](https://github.com/user-attachments/assets/87467cea-ab9c-4dbd-bea2-4f748716c47a)
 
 
 ``` Python
