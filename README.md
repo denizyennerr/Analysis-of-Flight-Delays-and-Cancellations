@@ -741,6 +741,7 @@ plt.tight_layout()
 plt.show()
 ```
 
+![avg_departuredelay_carrier](https://github.com/user-attachments/assets/1c23eafb-9466-4c00-b94f-b829beece06d)
 
 
 - Identified which routes have the highest probability of falling into the level 1 delay category.
@@ -773,6 +774,8 @@ print(top_dep_delay_routes)
 print("Level 1: Routes with the highest probability of arrival delay")
 print(top_arr_delay_routes)
 ```
+
+
 # Level 1 Analysis: Routes with the Highest Probability of Delay
 
 ### Routes with the Highest Probability of Departure Delay
@@ -817,6 +820,11 @@ plt.tight_layout()
 plt.show()
 
 ```
+![routeswith_highestprob_dep_delay](https://github.com/user-attachments/assets/d7559535-a36a-421d-bde8-efcb8ccbd978)
+
+![routeswith_highestprob_arr_delay](https://github.com/user-attachments/assets/9c0e5eeb-61bc-433b-a192-a79e336b31e9)
+
+
 - This code creates bar charts to visualize the routes with the highest probabilities of experiencing delays, separated by departure and arrival delays.
 - First Plot: The code generates a bar chart showing the probability of departure delays for the top routes. The x-axis represents specific routes, while the y-axis shows the probability of delay. The bars are colored red, and the routes are rotated on the x-axis for readability.
 - Second Plot: The code produces a similar bar chart for the probability of arrival delays on the same routes. This chart follows the same formatting, but the bars are colored blue to distinguish it from the departure delay chart.
