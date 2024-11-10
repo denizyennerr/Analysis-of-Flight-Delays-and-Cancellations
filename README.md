@@ -61,7 +61,7 @@ In the initial data preparation phase, we performed the following tasks:
 3. Checking for duplicates to ensure data quality.
 4. Cleaning the data in the CSV file for accurate analysis.
 
-### Exploratory Data Analysis 
+## Exploratory Data Analysis 
 
 ### Data Analysis
 
