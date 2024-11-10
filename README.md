@@ -632,31 +632,35 @@ df_cleaned
 - A logical relationship between weather variables and flight delays was investigated.
   
 ```Python
-numeric_df = df_cleaned.select_dtypes(include=['float64', 'int64'])
 
 delay_columns = ['dep_delay', 'arr_delay']
 weather_columns = ['temp', 'dewp', 'humid', 'wind_dir', 'wind_speed', 'wind_gust', 'precip', 'pressure', 'visib']
-
 existing_columns = [col for col in delay_columns + weather_columns if col in numeric_df.columns]
-subset_df = numeric_df[existing_columns]
-
-subset_df = subset_df.dropna()
+subset_df = numeric_df[existing_columns].dropna()
 
 corr = subset_df.corr()
 
 plt.figure(figsize=(12, 10))
-plt.matshow(corr, fignum=1, cmap='YlGnBu')
-plt.colorbar()
+
+sns.heatmap(corr, annot=True, fmt=".2f", cmap="coolwarm", 
+            cbar_kws={'label': 'Correlation Coefficient'}, linewidths=0.5, 
+            annot_kws={"size": 10, "color": "black"}, square=True)
 
 plt.xticks(range(len(corr.columns)), corr.columns, rotation=90)
 plt.yticks(range(len(corr.columns)), corr.columns)
 
-for (i, j), val in np.ndenumerate(corr.values):
-    plt.text(j, i, f'{val:.2f}', ha='center', va='center', color='black')
+plt.text(-1, 0.5, 'Delay', ha='center', va='center', color='black', fontsize=12, weight='bold', rotation=90)
+plt.text(-1, 5.5, 'Weather', ha='center', va='center', color='black', fontsize=12, weight='bold', rotation=90)
+plt.text(0.5, -1, 'Delay', ha='center', va='center', color='black', fontsize=12, weight='bold')
+plt.text(5.5, -1, 'Weather', ha='center', va='center', color='black', fontsize=12, weight='bold')
 
-plt.title('Correlation between Weather and Delay Time')
+plt.title('Correlation between Weather and Delay Time', pad=20)
 plt.show()
 ```
+
+![Correlation_Co](https://github.com/user-attachments/assets/ed7a9dec-185f-4002-a918-0ed48f96fc4e)
+
+
 
 - Identified which airlines perform the worst in terms of delays.
   
