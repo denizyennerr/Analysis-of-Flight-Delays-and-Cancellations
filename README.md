@@ -1049,7 +1049,144 @@ plt.tight_layout()
 plt.show()
 ```
 
+
+``` Python
+total_performance = df_cleaned.groupby("airline")["distance"].sum().reset_index()
+best_5_airlines = total_performance.sort_values(by="distance", ascending=False).head(5)
+print(best_5_airlines)
+```
+# Airline Distance Analysis
+
+This table shows the total distance flown by each airline, providing an indication of their flight activity and network reach.
+
+| Airline                 | Total Distance Flown (Miles) |
+|-------------------------|------------------------------|
+| Alaska Airlines Inc.    | 52,832,566                   |
+| Delta Air Lines Inc.    | 23,502,339                   |
+| United Air Lines Inc.   | 8,418,462                    |
+| SkyWest Airlines Inc.   | 7,236,636                    |
+| Horizon Air             | 6,933,990                    |
+
+This data highlights Alaska Airlines Inc. as the airline with the highest total distance flown, followed by Delta Air Lines Inc. and United Air Lines Inc.
+
+``` Python
+otal_performance = df_cleaned.groupby("airline")["distance"].sum().reset_index()
+best_5_airlines = total_performance.sort_values(by="distance", ascending=False).head(5)
+
+plt.figure(figsize=(10, 6))
+plt.bar(best_5_airlines['airline'], best_5_airlines['distance'], color='skyblue')
+plt.xlabel('Airline')
+plt.ylabel('Total Distance Flown')
+plt.title('Top 5 Airlines by Total Distance Flown')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+```
+![top5_airlines_distanceflown](https://github.com/user-attachments/assets/4e58a3f4-3284-4542-ba63-5409e35e7527)
+
+
+``` Python
+worst_5_airlines = total_performance.sort_values(by="distance").head(5)
+print(worst_5_airlines)
+```
+# Airline Distance Analysis (Continued)
+
+This table shows additional airlines with their respective total distance flown, giving further insights into their operational scale.
+
+| Airline                   | Total Distance Flown (Miles) |
+|---------------------------|------------------------------|
+| Allegiant Air             | 100,247                      |
+| Frontier Airlines Inc.    | 401,619                      |
+| Spirit Air Lines          | 665,145                      |
+| JetBlue Airways           | 1,542,234                    |
+| Hawaiian Airlines Inc.    | 1,889,778                    |
+
+This data highlights lower total distances flown by these airlines, reflecting smaller networks or more regionally focused operations compared to larger carriers.
+
+``` Python
+worst_5_airlines = total_performance.sort_values(by="distance").head(5)
+plt.figure(figsize=(10, 6))
+plt.barh(worst_5_airlines['airline'], worst_5_airlines['distance'], color='lightcoral')
+plt.xlabel('Total Distance Flown')
+plt.ylabel('Airline')
+plt.title('Bottom 5 Airlines by Total Distance Flown')
+plt.tight_layout()
+plt.show()
+```
+
+![Bottom5Airlines_distanceflown](https://github.com/user-attachments/assets/a0402ecb-fc7d-4ba0-82ee-a2b252942f05)
+
+
+
 6. Determine the percentage of flight cancellations and display how this varies by airline.
+
+``` Python
+df_copy['cancelled'] = df_copy['dep_time'].isna() | df_copy['arr_time'].isna()
+total_flights = len(df_copy)
+cancelled_flights_count = df_copy['cancelled'].sum()
+cancelled_flights_percentage = (cancelled_flights_count / total_flights) * 100
+
+print(f"Total number of flights: {total_flights}")
+print(f"Number of cancelled flights: {cancelled_flights_count}")
+print(f"Percentage of cancelled flights: {cancelled_flights_percentage:.2f}%")
+airline_cancelled_percentage = df_copy.groupby('airline')['cancelled'].mean() * 100
+
+print("\nPercentage of cancelled flights by airline:")
+print(airline_cancelled_percentage)
+```
+# Flight Cancellation Analysis
+
+### Overall Cancellation Statistics
+- **Total Number of Flights**: 111,006
+- **Number of Cancelled Flights**: 2,537
+- **Percentage of Cancelled Flights**: 2.29%
+
+### Percentage of Cancelled Flights by Airline
+
+| Airline                    | Percentage of Cancelled Flights (%) |
+|----------------------------|-------------------------------------|
+| Alaska Airlines Inc.       | 3.21                               |
+| Allegiant Air              | 6.19                               |
+| American Airlines Inc.     | 2.32                               |
+| Delta Air Lines Inc.       | 2.32                               |
+| Frontier Airlines Inc.     | 2.64                               |
+| Hawaiian Airlines Inc.     | 0.55                               |
+| Horizon Air                | 1.42                               |
+| JetBlue Airways            | 4.76                               |
+| SkyWest Airlines Inc.      | 1.30                               |
+| Southwest Airlines Co.     | 1.42                               |
+| Spirit Air Lines           | 4.43                               |
+| United Air Lines Inc.      | 1.34                               |
+
+This analysis shows that **Allegiant Air** has the highest cancellation rate at 6.19%, while **Hawaiian Airlines Inc.** has the lowest at 0.55%. These percentages provide insight into airline reliability in terms of flight cancellations.
+
+``` Python
+df_copy['cancelled'] = df_copy['dep_time'].isna() | df_copy['arr_time'].isna()
+total_flights = len(df_copy)
+cancelled_flights_count = df_copy['cancelled'].sum()
+cancelled_flights_percentage = (cancelled_flights_count / total_flights) * 100
+
+airline_cancelled_percentage = df_copy.groupby('airline')['cancelled'].mean() * 100
+plt.figure(figsize=(12, 8))
+bars = plt.bar(airline_cancelled_percentage.index, airline_cancelled_percentage.values, color='blue', edgecolor='black')
+
+plt.xlabel('Airline', fontsize=12, fontweight='bold')
+plt.ylabel('Percentage of Cancelled Flights', fontsize=12, fontweight='bold')
+plt.title('Percentage of Cancelled Flights by Airline', fontsize=14, fontweight='bold')
+plt.xticks(rotation=45, ha='right', fontsize=10)
+plt.yticks(fontsize=10)
+plt.ylim(0, 100)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.tight_layout()
+
+for bar in bars:
+    plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 1, f'{bar.get_height():.1f}%', 
+             ha='center', va='bottom', fontsize=9)
+plt.show()
+```
+![PercentageofCancelledFlights](https://github.com/user-attachments/assets/8e378408-c7a6-4740-a6e0-03cea08253d6)
+
 7. Is there a specific time of day and/or time of year with higher delay durations?
 8. Which routes have the highest delay durations?
 
