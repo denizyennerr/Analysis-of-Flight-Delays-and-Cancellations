@@ -852,10 +852,6 @@ df_cleaned['distance_category2'] = pd.cut(df_cleaned['distance'], bins=bins, lab
 df_cleaned['distance_category2']
 ```
 
-
-
-
-
 3. Identify the airlines with the highest number of flights conducted.
 
 ```Python
@@ -896,6 +892,9 @@ plt.grid(axis='y', linestyle='--', alpha=0.7)
 plt.tight_layout()
 plt.show()
 ```
+
+![totaldistance_flownby_airlines](https://github.com/user-attachments/assets/8061d2ae-4049-4cbe-b477-4276ed399113)
+
 
 4. Compare the performance of airlines based on delays.
 
@@ -946,6 +945,7 @@ ax.legend()
 plt.tight_layout()
 plt.show()
 ```
+![avgdeparture_avgarrivaldelays](https://github.com/user-attachments/assets/887bc781-08c3-4d86-b31d-432035a10e41)
 
 
 5. Examine whether airline performance varies across different months of the year, and show the top 5 airlines with the best performance and the bottom 5 with the worst performance.
@@ -994,6 +994,12 @@ plt.grid(True)
 plt.tight_layout()
 plt.show()
 ```
+
+
+
+
+
+
 ```Python
 df_cleaned['date'] = pd.to_datetime(df_cleaned['date'])
 df_cleaned['year'] = df_cleaned['date'].dt.year
