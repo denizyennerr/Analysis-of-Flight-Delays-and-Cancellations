@@ -404,7 +404,12 @@ Interference:
 8. **flight**: The `flight` feature, representing designated flight numbers, has many unique values (3844). Although specific flights might have delay patterns, the high dimensionality of `flight` could lead to overfitting. Consequently, `flight` will be excluded from the dataset to maintain model generalizability.
 
 
-      
+The following code helps us to perform data preprocessing to clean and standardize the time-related columns in the dataset. Here's a breakdown of each step:
+
+1. **Scheduled Departure Time (`sched_dep_time`)**: 
+   - Converts `sched_dep_time` to a 4-digit string format (`HHMM`) using `str.zfill(4)`, ensuring all times have leading zeros as necessary.
+   - Parses the formatted string into a time format (`HH:MM`) for easier interpretation and analysis.
+
 ```Python
 df['sched_dep_time'] =df['sched_dep_time'].astype(str).str.zfill(4)
 df['sched_dep_time']= pd.to_datetime(df['sched_dep_time'], format="%H%M").dt.time.astype(str).str[:5]
@@ -422,6 +427,9 @@ df.head(7)
 | 2022-01-01 00:43:00 | 104.0    | 00:43         | 21.0      | 936.0    | 930            | 6.0       | AA      | 501    | N413AN  | SEA    | MIA  | 312.0    | 2724     | American Airlines Inc.| SEA-MIA | 25.0 | 14.0 | 62.50 | 350.0    | 8.05546    | 9.270062  | 0.0    | 1020.7   | 10.0  |
 
 
+2. **Scheduled Arrival Time (`sched_arr_time`)**:
+   - Similar to `sched_dep_time`, this converts `sched_arr_time` to a standardized 4-digit string and then to a readable time format (`HH:MM`).
+  
 ```Python
 df['sched_arr_time'] = df['sched_arr_time'].astype(str).str.zfill(4)
 df['sched_arr_time']= pd.to_datetime(df['sched_arr_time'], format="%H%M").dt.time.astype(str).str[:5]
@@ -435,6 +443,14 @@ df.head()
 | 2022-01-01 23:55:00 | 10.0     | 23:55         | 15.0      | 759.0    | 07:30          | 29.0      | AS      | 270    | N274AK  | SEA    | ATL  | 261.0    | 2182     | Alaska Airlines Inc.  | SEA-ATL | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
 | 2022-01-01 23:50:00 | 25.0     | 23:50         | 35.0      | 606.0    | 05:50          | 16.0      | AS      | 7      | N281AK  | SEA    | ORD  | 193.0    | 1721     | Alaska Airlines Inc.  | SEA-ORD | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
 | 2022-01-01 23:49:00 | 35.0     | 23:49         | 46.0      | 616.0    | 05:45          | 31.0      | UA      | 507    | N426UA  | PDX    | ORD  | 196.0    | 1739     | United Air Lines Inc. | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
+
+
+3. **Arrival Time (`arr_time`)**:
+   - Converts `arr_time` to a numeric type, coercing any non-numeric values to `NaN`.
+   - Replaces any infinity values with `NaN` and drops rows where `arr_time` is `NaN`, ensuring only valid numeric times remain.
+   - Converts `arr_time` to an integer for consistency in the data format.
+
+This preprocessing improves data quality, making the `sched_dep_time`, `sched_arr_time`, and `arr_time` columns uniformly formatted and ready for analysis.    
 
 ```Python
 df['arr_time'] = pd.to_numeric(df['arr_time'], errors='coerce')
@@ -451,6 +467,20 @@ df.head(6)
 | 2022-01-01 23:50:00 | 25.0     | 23:50         | 35.0      | 606      | 05:50          | 16.0      | AS      | 7      | N281AK  | SEA    | ORD  | 193.0    | 1721     | Alaska Airlines Inc.  | SEA-ORD | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
 | 2022-01-01 23:49:00 | 35.0     | 23:49         | 46.0      | 616      | 05:45          | 31.0      | UA      | 507    | N426UA  | PDX    | ORD  | 196.0    | 1739     | United Air Lines Inc. | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
 | 2022-01-01 23:52:00 | 51.0     | 23:52         | 59.0      | 840      | 07:58          | 42.0      | B6      | 366    | N625JB  | PDX    | JFK  | 269.0    | 2454     | JetBlue Airways       | PDX-JFK | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
+
+The following code refines the `arr_time` column by ensuring that all values are in a standardized time format (`HH:MM`), while handling potential formatting inconsistencies. Here’s a summary of each step:
+
+1. **Standardize Format**:
+   - Converts `arr_time` to a 4-digit string format using `str.zfill(4)`, ensuring times are uniformly formatted (e.g., `0300` for 3:00 AM).
+2. **Remove Extra Whitespace**:
+   - Strips any leading or trailing whitespace from the `arr_time` values.
+3. **Filter Numeric Values**:
+   - Filters the `arr_time` column to keep only numeric entries, removing any rows with non-numeric values that could cause parsing errors.
+4. **Convert to Time Format**:
+   - Attempts to parse `arr_time` into a time format (`HH:MM`) using `pd.to_datetime`, setting invalid formats to `NaT` (`errors='coerce'`).
+   - Extracts and formats the time as a string in `HH:MM` format, making it ready for consistent time-based analysis.
+
+The code improves data integrity by ensuring `arr_time` is uniformly formatted as `HH:MM` and excludes any non-time values, making the dataset cleaner and more reliable.
 
 ```Python
 df['arr_time']=df['arr_time'].astype(str).str.zfill(4)
@@ -479,6 +509,20 @@ df.head()
 | 2022-01-01 23:55:00 | 00:10    | 23:55         | 15.0      | NaT      | 07:30          | 29.0      | AS      | 270    | N274AK  | SEA-ATL | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
 | 2022-01-01 23:50:00 | 00:25    | 23:50         | 35.0      | NaT      | 05:50          | 16.0      | AS      | 7      | N281AK  | SEA-ORD | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
 | 2022-01-01 23:49:00 | 00:35    | 23:49         | 46.0      | NaT      | 05:45          | 31.0      | UA      | 507    | N426UA  | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
+
+The following code standardizes the `dep_time` (departure time) column by ensuring all values are formatted as valid times in the `HH:MM` format. Here’s a breakdown of the steps:
+
+1. **Convert and Pad Values**:
+   - Converts `dep_time` to an integer, then back to a string, using `str.zfill(4)` to ensure all values have four digits (e.g., `0800` for 8:00 AM).
+2. **Remove Extra Whitespace**:
+   - Strips any leading or trailing whitespace from the `dep_time` values for consistency.
+3. **Filter Numeric Values**:
+   - Filters the `dep_time` column to retain only numeric entries, which helps prevent parsing errors by excluding rows with non-numeric values.
+4. **Convert to Time Format**:
+   - Attempts to parse `dep_time` into a time format (`HH:MM`) using `pd.to_datetime`, setting invalid formats to `NaT` (`errors='coerce'`).
+   - Extracts and formats the time as a string (`HH:MM`), finalizing the column for accurate and uniform time-based analysis.
+
+This process improves data consistency and reliability by ensuring `dep_time` is correctly formatted as `HH:MM`, making it suitable for further analysis or modeling.
 
 ```Python
 df['dep_time']=df['dep_time'].astype(int).astype(str).str.zfill(4)
@@ -509,6 +553,16 @@ df.head()
 | 2022-01-01 23:50:00 | 00:25    | 23:50          | 35.0      | 06:06    | 05:50          | 16.0      | AS      | 7      | N281AK  | SEA-ORD | 33.0 | 23.0 | 66.06 | 160.0    | 8.05546    | 9.270062  | 0.0    | 1022.9   | 10.0  |
 | 2022-01-01 23:49:00 | 00:35    | 23:49          | 46.0      | 06:16    | 05:45          | 31.0      | UA      | 507    | N426UA  | PDX-ORD | 33.0 | 19.0 | 55.75 | 120.0    | 6.90468    | 7.945768  | 0.0    | 1025.1   | 10.0  |
 
+The following code helps us to performs data cleaning for the `arr_delay` (arrival delay) and `dep_delay` (departure delay) columns, ensuring that any missing values are handled and the data types are standardized for analysis. Here’s an explanation:
+
+1. **Handle Missing Values**:
+   - For both `arr_delay` and `dep_delay`, any `NaN` values are replaced with `0` using `.fillna(0)`. This approach assumes that missing delay values represent no delay.
+2. **Convert to Integer**:
+   - Converts both `arr_delay` and `dep_delay` columns to integer type, which standardizes the data type and ensures compatibility with calculations or visualizations requiring integer values.
+3. **Display Dataframe Settings**:
+   - `pd.set_option('display.max_columns', None)` ensures that all columns of the dataframe are displayed when calling `.head()`, providing a full view of the dataset’s structure and confirming the transformations.
+
+This code improves the dataset's reliability by treating missing delays as zero and enforcing integer formatting, making it more consistent and suitable for further analysis.
 
 ```Python
 df['arr_delay'] = df['arr_delay'].fillna(0)
