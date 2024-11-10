@@ -1286,6 +1286,7 @@ plt.grid(axis='x', linestyle='--', alpha=0.7)
 plt.tight_layout()
 plt.show()
 ```
+
 ![top10routesby_airlinedelay](https://github.com/user-attachments/assets/34538538-4f26-4c5e-a910-dd39a52dfae1)
 
 
@@ -1323,7 +1324,8 @@ plt.ylabel('Route')
 plt.grid(axis='x', linestyle='--', alpha=0.7)
 plt.tight_layout()
 plt.show()
-``` 
+```
+
 ![top10routes_bymax_dep_delay](https://github.com/user-attachments/assets/857bf441-bed0-4844-b12e-be2b9270aa3a)
 
 ### Results/Findings 
@@ -1332,23 +1334,18 @@ The analysis results are summarised as follows:
 1. **High-Delay Routes**:
    - Certain routes consistently experience high maximum delays, both for departure and arrival. The routes **SEA-CLT** (Seattle to Charlotte) and **PDX-DFW** (Portland to Dallas Fort Worth) stand out with some of the highest recorded delays, reaching up to 2120 minutes for departures and 2098 minutes for arrivals.
    - Routes between major hubs, such as **SEA-ORD** (Seattle to Chicago) and **PDX-PHX** (Portland to Phoenix), also show significant delays, indicating potential congestion issues or operational challenges on these routes.
-
 2. **Time-Based Delay Patterns**:
    - **Hourly Trends**: Departure delays tend to increase as the day progresses, peaking in the late afternoon and evening hours. Delays are lowest early in the morning but grow through midday, reaching a maximum around 4 PM to 5 PM.
    - **Monthly Trends**: Certain months, such as January and April, show higher average departure delays, suggesting that seasonal factors or peak travel times may contribute to increased delays.
-
 3. **Airline Performance**:
    - Among airlines, **Allegiant Air** and **JetBlue Airways** exhibit the highest rates of flight cancellations and delays, indicating potential operational issues or challenges in maintaining schedules.
    - **Hawaiian Airlines** consistently records the lowest cancellation rates and comparatively low average delays, suggesting efficient operations and high reliability in their service.
-
 4. **Weather Impact on Delays**:
    - Correlation analysis between weather conditions and delays reveals moderate associations. Variables such as **wind speed** and **visibility** show some correlation with delays, particularly during periods of adverse weather. However, the impact varies by season and location, with certain routes more affected than others.
    - Seasonal weather variations, such as winter storms and summer thunderstorms, likely play a role in delay increases for specific months.
-
 5. **Cancellation Patterns**:
    - The overall cancellation rate is approximately **2.29%** across all flights, with certain airlines showing higher rates. **Allegiant Air** and **JetBlue Airways** have the highest cancellation percentages, possibly due to smaller fleets and limited rescheduling options during operational disruptions.
    - **Hawaiian Airlines** and **SkyWest Airlines** show the lowest cancellation rates, indicating effective management of flight schedules and minimal disruptions.
-
 6. **Top Delay-Prone Airlines and Routes**:
    - The top routes for both departure and arrival delays tend to involve longer distances or flights to major hubs with high traffic. This suggests that both the length of the route and the destination's congestion level play a role in delay likelihood.
    - Airlines with larger networks and more frequent flights, such as **Alaska Airlines** and **Delta Air Lines**, demonstrate better on-time performance in general, possibly due to more robust scheduling and greater fleet resources.
@@ -1361,43 +1358,32 @@ Based on the analysis, we recommend the following actions:
 1. **Optimize Scheduling to Avoid Peak Delay Hours**:
    - **Adjust departure schedules** to avoid late afternoon and evening hours, which tend to have the highest delays. Early morning flights generally experience fewer delays, so increasing flight frequency during these hours could help improve overall on-time performance.
    - **Stagger departures and arrivals** at major hubs during peak times to reduce congestion and manage traffic more effectively, especially on high-delay routes like **SEA-CLT** and **PDX-DFW**.
-
 2. **Strengthen Operations on High-Delay Routes**:
    - Routes with high maximum delays, such as **SEA-CLT** and **PDX-DFW**, may benefit from additional resources, such as increased staffing and better coordination between ground operations. Airlines could also consider **adding buffer times** to schedules for these routes to improve punctuality.
    - Consider deploying more resilient aircraft on delay-prone routes to handle operational and weather-related challenges more effectively.
-
 3. **Monitor Weather Patterns and Prepare Contingency Plans**:
    - Since weather variables like **wind speed** and **visibility** have a moderate impact on delays, airlines should invest in **weather prediction and monitoring systems** to anticipate potential delays and proactively manage schedules.
    - Develop contingency plans for flights during adverse weather months, such as January and April, when delays are higher. Airlines can enhance passenger communication and offer flexible rescheduling options during expected periods of inclement weather.
-
 4. **Focus on Improving Performance for Delay-Prone Airlines**:
    - Airlines like **Allegiant Air** and **JetBlue Airways**, which exhibit higher delay and cancellation rates, may benefit from **enhancing operational efficiency** and improving aircraft turnaround times. This could involve **increasing ground crew efficiency** or investing in better maintenance practices to reduce delays.
    - Implement a **performance monitoring system** to track delay metrics by flight and identify operational bottlenecks, allowing these airlines to focus on specific issues causing delays.
-
 5. **Expand Fleet or Increase Flexibility for High-Cancellation Airlines**:
    - Airlines with higher cancellation rates, like **Allegiant Air** and **JetBlue Airways**, should consider **increasing fleet flexibility** by acquiring additional aircraft or arranging for backup flights. This can help maintain schedules and reduce the need for cancellations due to equipment or scheduling conflicts.
    - Enhance **passenger service policies** to accommodate travelers on canceled flights, including partnerships with other airlines for alternative travel options.
-
 6. **Improve Communication and Customer Experience During Delays**:
    - Enhance **real-time communication systems** to keep passengers informed about delays and cancellations. Clear and timely updates help manage passenger expectations and reduce dissatisfaction.
    - Offer compensation or additional benefits (e.g., lounge access or meal vouchers) to affected passengers on delay-prone routes, especially for long-haul flights with a high likelihood of delay.
-
 7. **Analyze Seasonal Trends and Adjust Capacity**:
    - Seasonal variations in delays suggest that airlines could benefit from **adjusting flight capacity and crew availability** based on peak travel and weather conditions. For example, adding extra flights or adjusting schedules during busy summer months can alleviate bottlenecks.
    - Conduct further analysis on monthly trends to identify potential off-peak seasons where schedules can be optimized to improve operational efficiency and reduce costs.
 
 
 ### Limitations
-### Limitations
 
 1. **Data Scope**: The analysis is based on a specific dataset that may not capture all factors influencing delays, such as real-time air traffic, crew availability, or maintenance issues, which can significantly impact punctuality.
-  
 2. **Weather Data Limitations**: While weather variables are included, they may not fully capture the impact of severe or unexpected weather events on delays. Additionally, weather data is typically collected from a single source and may not reflect conditions along the entire flight route.
-
 3. **Route-Specific Factors**: The analysis does not consider airport-specific factors like runway availability, airport congestion, or local regulations, which can vary significantly and impact delay patterns.
-
 4. **Operational Differences Across Airlines**: Different airlines have unique operational practices, fleet sizes, and resource management strategies that can affect delays. This analysis does not account for these variations in airline policies and procedures.
-
 5. **Timeframe**: The data covers a limited timeframe and may not capture long-term trends or seasonal variations accurately. Delay patterns can change over time due to shifts in travel demand, airline strategies, or external factors like economic conditions.
 
 
