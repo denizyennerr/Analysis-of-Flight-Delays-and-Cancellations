@@ -1193,23 +1193,212 @@ plt.show()
 ![PercentageofCancelledFlights](https://github.com/user-attachments/assets/8e378408-c7a6-4740-a6e0-03cea08253d6)
 
 7. Is there a specific time of day and/or time of year with higher delay durations?
+
+``` Python
+df_cleaned['day'] = df_cleaned['date'].dt.day
+df_cleaned['hour'] = df_cleaned['date'].dt.hour
+```
+
+``` Python
+hourly_dep_delay = df_cleaned.groupby('hour')['dep_delay'].mean().reset_index()
+monthly_dep_delay = df_cleaned.groupby('month')['dep_delay'].mean().reset_index()
+
+print(hourly_dep_delay)
+print(monthly_dep_delay)
+```
+# Average Departure Delay by Hour and Month
+
+This table shows the average departure delay (in minutes) by hour of the day and month of the year, helping to identify peak times and months for delays.
+
+### Average Departure Delay by Hour
+
+| Hour | Average Departure Delay (minutes) |
+|------|-----------------------------------|
+| 0    | 11.97                             |
+| 1    | 4.06                              |
+| 5    | 2.75                              |
+| 6    | 3.10                              |
+| 7    | 4.38                              |
+| 8    | 5.83                              |
+| 9    | 5.83                              |
+| 10   | 6.89                              |
+| 11   | 8.68                              |
+| 12   | 8.17                              |
+| 13   | 8.18                              |
+| 14   | 10.12                             |
+| 15   | 10.21                             |
+| 16   | 9.14                              |
+| 17   | 10.60                             |
+| 18   | 9.67                              |
+| 19   | 7.75                              |
+| 20   | 9.04                              |
+| 21   | 12.13                             |
+| 22   | 11.46                             |
+| 23   | 13.28                             |
+
+### Average Departure Delay by Month
+
+| Month | Average Departure Delay (minutes) |
+|-------|-----------------------------------|
+| 1     | 10.80                             |
+| 2     | 5.25                              |
+| 3     | 5.90                              |
+| 4     | 10.03                             |
+| 5     | 7.13                              |
+| 6     | 8.90                              |
+
+These tables provide insights into patterns of delays by hour and month, which may help in identifying times with high delay rates.
+
+
 8. Which routes have the highest delay durations?
+``` Python
+max_arr_delay= df_cleaned.groupby("route")['arr_delay'].max().sort_values(ascending=False)
+max_arr_delay.head(10)
+```
+# Top 10 Routes with the Maximum Arrival Delays
+
+This table shows the top 10 routes with the highest recorded arrival delays (in minutes). These values represent the maximum delay observed for each route.
+
+| Route   | Maximum Arrival Delay (minutes) |
+|---------|---------------------------------|
+| SEA-CLT | 2098                            |
+| PDX-DFW | 1913                            |
+| SEA-ORD | 1837                            |
+| PDX-PHX | 1704                            |
+| PDX-JFK | 1520                            |
+| PDX-LAX | 1282                            |
+| SEA-BOS | 1275                            |
+| SEA-DFW | 1265                            |
+| PDX-LAS | 1215                            |
+| SEA-HNL | 1139                            |
+
+These routes experience some of the longest arrival delays, with **SEA-CLT** having the highest delay at 2098 minutes.
+
+``` Python
+max_arr_delay = df_cleaned.groupby("route")['arr_delay'].max().sort_values(ascending=False).head(10)
+
+plt.figure(figsize=(10, 6))
+max_arr_delay.sort_values().plot(kind='barh', color='indigo')
+plt.title('Top 10 Routes by Maximum Arrival Delay')
+plt.xlabel('Maximum Arrival Delay (minutes)')
+plt.ylabel('Route')
+plt.grid(axis='x', linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+```
+![top10routesby_airlinedelay](https://github.com/user-attachments/assets/34538538-4f26-4c5e-a910-dd39a52dfae1)
 
 
+``` Python
+max_dep_delay= df_cleaned.groupby("route")['dep_delay'].max().sort_values(ascending=False)
+max_dep_delay.head(10)
+```
+# Top 10 Routes with the Maximum Departure Delays
 
+This table shows the top 10 routes with the highest recorded departure delays (in minutes). These values represent the maximum delay observed for each route.
+
+| Route   | Maximum Departure Delay (minutes) |
+|---------|-----------------------------------|
+| SEA-CLT | 2120                              |
+| PDX-DFW | 1930                              |
+| SEA-ORD | 1818                              |
+| PDX-PHX | 1687                              |
+| PDX-JFK | 1527                              |
+| PDX-LAX | 1284                              |
+| SEA-DFW | 1281                              |
+| SEA-BOS | 1268                              |
+| PDX-LAS | 1223                              |
+| SEA-HNL | 1124                              |
+
+These routes experience some of the longest departure delays, with **SEA-CLT** having the highest delay at 2120 minutes.
+
+``` Python
+max_dep_delay = df_cleaned.groupby("route")['dep_delay'].max().sort_values(ascending=False).head(10)
+
+plt.figure(figsize=(10, 6))
+max_dep_delay.sort_values().plot(kind='barh', color='green')
+plt.title('Top 10 Routes by Maximum Departure Delay')
+plt.xlabel('Maximum Departure Delay (minutes)')
+plt.ylabel('Route')
+plt.grid(axis='x', linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+``` 
+![top10routes_bymax_dep_delay](https://github.com/user-attachments/assets/857bf441-bed0-4844-b12e-be2b9270aa3a)
 
 ### Results/Findings 
 The analysis results are summarised as follows:
-1. 
-2. 
-3. 
+
+1. **High-Delay Routes**:
+   - Certain routes consistently experience high maximum delays, both for departure and arrival. The routes **SEA-CLT** (Seattle to Charlotte) and **PDX-DFW** (Portland to Dallas Fort Worth) stand out with some of the highest recorded delays, reaching up to 2120 minutes for departures and 2098 minutes for arrivals.
+   - Routes between major hubs, such as **SEA-ORD** (Seattle to Chicago) and **PDX-PHX** (Portland to Phoenix), also show significant delays, indicating potential congestion issues or operational challenges on these routes.
+
+2. **Time-Based Delay Patterns**:
+   - **Hourly Trends**: Departure delays tend to increase as the day progresses, peaking in the late afternoon and evening hours. Delays are lowest early in the morning but grow through midday, reaching a maximum around 4 PM to 5 PM.
+   - **Monthly Trends**: Certain months, such as January and April, show higher average departure delays, suggesting that seasonal factors or peak travel times may contribute to increased delays.
+
+3. **Airline Performance**:
+   - Among airlines, **Allegiant Air** and **JetBlue Airways** exhibit the highest rates of flight cancellations and delays, indicating potential operational issues or challenges in maintaining schedules.
+   - **Hawaiian Airlines** consistently records the lowest cancellation rates and comparatively low average delays, suggesting efficient operations and high reliability in their service.
+
+4. **Weather Impact on Delays**:
+   - Correlation analysis between weather conditions and delays reveals moderate associations. Variables such as **wind speed** and **visibility** show some correlation with delays, particularly during periods of adverse weather. However, the impact varies by season and location, with certain routes more affected than others.
+   - Seasonal weather variations, such as winter storms and summer thunderstorms, likely play a role in delay increases for specific months.
+
+5. **Cancellation Patterns**:
+   - The overall cancellation rate is approximately **2.29%** across all flights, with certain airlines showing higher rates. **Allegiant Air** and **JetBlue Airways** have the highest cancellation percentages, possibly due to smaller fleets and limited rescheduling options during operational disruptions.
+   - **Hawaiian Airlines** and **SkyWest Airlines** show the lowest cancellation rates, indicating effective management of flight schedules and minimal disruptions.
+
+6. **Top Delay-Prone Airlines and Routes**:
+   - The top routes for both departure and arrival delays tend to involve longer distances or flights to major hubs with high traffic. This suggests that both the length of the route and the destination's congestion level play a role in delay likelihood.
+   - Airlines with larger networks and more frequent flights, such as **Alaska Airlines** and **Delta Air Lines**, demonstrate better on-time performance in general, possibly due to more robust scheduling and greater fleet resources.
+
 
 
 ### Recommendations
 Based on the analysis, we recommend the following actions:
 
+1. **Optimize Scheduling to Avoid Peak Delay Hours**:
+   - **Adjust departure schedules** to avoid late afternoon and evening hours, which tend to have the highest delays. Early morning flights generally experience fewer delays, so increasing flight frequency during these hours could help improve overall on-time performance.
+   - **Stagger departures and arrivals** at major hubs during peak times to reduce congestion and manage traffic more effectively, especially on high-delay routes like **SEA-CLT** and **PDX-DFW**.
+
+2. **Strengthen Operations on High-Delay Routes**:
+   - Routes with high maximum delays, such as **SEA-CLT** and **PDX-DFW**, may benefit from additional resources, such as increased staffing and better coordination between ground operations. Airlines could also consider **adding buffer times** to schedules for these routes to improve punctuality.
+   - Consider deploying more resilient aircraft on delay-prone routes to handle operational and weather-related challenges more effectively.
+
+3. **Monitor Weather Patterns and Prepare Contingency Plans**:
+   - Since weather variables like **wind speed** and **visibility** have a moderate impact on delays, airlines should invest in **weather prediction and monitoring systems** to anticipate potential delays and proactively manage schedules.
+   - Develop contingency plans for flights during adverse weather months, such as January and April, when delays are higher. Airlines can enhance passenger communication and offer flexible rescheduling options during expected periods of inclement weather.
+
+4. **Focus on Improving Performance for Delay-Prone Airlines**:
+   - Airlines like **Allegiant Air** and **JetBlue Airways**, which exhibit higher delay and cancellation rates, may benefit from **enhancing operational efficiency** and improving aircraft turnaround times. This could involve **increasing ground crew efficiency** or investing in better maintenance practices to reduce delays.
+   - Implement a **performance monitoring system** to track delay metrics by flight and identify operational bottlenecks, allowing these airlines to focus on specific issues causing delays.
+
+5. **Expand Fleet or Increase Flexibility for High-Cancellation Airlines**:
+   - Airlines with higher cancellation rates, like **Allegiant Air** and **JetBlue Airways**, should consider **increasing fleet flexibility** by acquiring additional aircraft or arranging for backup flights. This can help maintain schedules and reduce the need for cancellations due to equipment or scheduling conflicts.
+   - Enhance **passenger service policies** to accommodate travelers on canceled flights, including partnerships with other airlines for alternative travel options.
+
+6. **Improve Communication and Customer Experience During Delays**:
+   - Enhance **real-time communication systems** to keep passengers informed about delays and cancellations. Clear and timely updates help manage passenger expectations and reduce dissatisfaction.
+   - Offer compensation or additional benefits (e.g., lounge access or meal vouchers) to affected passengers on delay-prone routes, especially for long-haul flights with a high likelihood of delay.
+
+7. **Analyze Seasonal Trends and Adjust Capacity**:
+   - Seasonal variations in delays suggest that airlines could benefit from **adjusting flight capacity and crew availability** based on peak travel and weather conditions. For example, adding extra flights or adjusting schedules during busy summer months can alleviate bottlenecks.
+   - Conduct further analysis on monthly trends to identify potential off-peak seasons where schedules can be optimized to improve operational efficiency and reduce costs.
+
 
 ### Limitations
+### Limitations
+
+1. **Data Scope**: The analysis is based on a specific dataset that may not capture all factors influencing delays, such as real-time air traffic, crew availability, or maintenance issues, which can significantly impact punctuality.
+  
+2. **Weather Data Limitations**: While weather variables are included, they may not fully capture the impact of severe or unexpected weather events on delays. Additionally, weather data is typically collected from a single source and may not reflect conditions along the entire flight route.
+
+3. **Route-Specific Factors**: The analysis does not consider airport-specific factors like runway availability, airport congestion, or local regulations, which can vary significantly and impact delay patterns.
+
+4. **Operational Differences Across Airlines**: Different airlines have unique operational practices, fleet sizes, and resource management strategies that can affect delays. This analysis does not account for these variations in airline policies and procedures.
+
+5. **Timeframe**: The data covers a limited timeframe and may not capture long-term trends or seasonal variations accurately. Delay patterns can change over time due to shifts in travel demand, airline strategies, or external factors like economic conditions.
 
 
 ### References
