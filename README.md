@@ -657,7 +657,6 @@ for (i, j), val in np.ndenumerate(corr.values):
 plt.title('Correlation between Weather and Delay Time')
 plt.show()
 ```
-![correlation_matrix](https://github.com/user-attachments/assets/b28b8fff-10a6-4290-9756-4875376d1bab)
 
 - Identified which airlines perform the worst in terms of delays.
   
