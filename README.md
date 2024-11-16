@@ -303,18 +303,29 @@ for col in categorical_columns:
 
 ![histogram_sched_dep_time](https://github.com/user-attachments/assets/36c196dd-4fb7-473b-a45e-819dbaca8cf9)
 
+![histogram_of_flight](https://github.com/user-attachments/assets/243040f8-c15a-45b7-a6a2-b37f632d555d)
 
+![histogram_of_distance](https://github.com/user-attachments/assets/890a1ae9-637a-4a78-bb29-6a5a363ff31b)
 
+![histogram_of_hour](https://github.com/user-attachments/assets/9e5da80d-9791-4149-b16a-70d2dbf7aba0)
 
+![histogram_of_minute](https://github.com/user-attachments/assets/524845f4-3667-4838-ba96-6a6189e83d49)
 
+![histogram_of_deptime](https://github.com/user-attachments/assets/e62b3f04-850b-44ca-bd04-9c3fc149c772)
 
+![histogram_of_depdelay](https://github.com/user-attachments/assets/0310bee9-db62-4cf1-b565-cfe4237a2819)
 
+![histogram_of_arrtime](https://github.com/user-attachments/assets/926d444e-2ee5-486a-8127-7f709ebed0e4)
 
+![histogram_of_arrdelay](https://github.com/user-attachments/assets/bd5df9d8-71d7-4186-a3c8-5ee27b50e1d0)
 
+![histogram_of_airtime](https://github.com/user-attachments/assets/3ac978d8-07cf-46f5-8db3-8d0ed8b7c184)
 
+![histogram_of_temp](https://github.com/user-attachments/assets/31e07a37-8095-443c-80a8-49046af3ea8e)
 
+![histogram_of_dewp](https://github.com/user-attachments/assets/88e1927c-8c7c-4711-a7b7-6aa56693fa46)
 
-
+![histogram_of_humid](https://github.com/user-attachments/assets/2f85dd8f-1c18-45be-8eac-aeacfce49b4c)
 
 
 
