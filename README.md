@@ -295,7 +295,9 @@ for col in categorical_columns:
     plt.show()
 
 ```
-![histogram_of_year](https://github.com/user-attachments/assets/d73063bc-b6c8-484e-9728-41f28efe9507)
+![histogram_of_year](https://github.com/user-attachments/assets/712cf598-8538-4a9d-b218-61b936df00f8)
+
+![histogram_of_month](https://github.com/user-attachments/assets/e6af60fa-0676-4c6e-af3b-c1a5bfda1d20)
 
 
 
