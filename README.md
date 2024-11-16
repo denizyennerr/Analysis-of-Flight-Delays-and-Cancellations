@@ -301,7 +301,8 @@ for col in categorical_columns:
 
 ![histogram_of_day](https://github.com/user-attachments/assets/3c5f04c7-8bde-4583-8879-e14c395602b4)
 
-![histogram_sched_dep_time](https://github.com/user-attachments/assets/36c196dd-4fb7-473b-a45e-819dbaca8cf9)
+![histogram_sched_dep_time](https://github.com/user-attachments/assets/ea274523-4414-4a16-9904-1bb95db0657c)
+
 
 ![histogram_of_flight](https://github.com/user-attachments/assets/243040f8-c15a-45b7-a6a2-b37f632d555d)
 
