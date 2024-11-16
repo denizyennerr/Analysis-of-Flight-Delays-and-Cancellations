@@ -299,35 +299,40 @@ for col in categorical_columns:
 
 ### Inference for the Year Histogram
 
-The histogram shows that all flight data in the dataset is from a single year, 2022. This suggests that the dataset is limited to a one-year period, which could restrict any long-term trend analysis or seasonal comparisons across multiple years. With data confined to a single year, the focus of the analysis will be on month-to-month or seasonal patterns within 2022 rather than year-over-year trends.
+- The histogram shows that all flight data in the dataset is from a single year, 2022. This suggests that the dataset is limited to a one-year period, which could restrict any long-term trend analysis or seasonal comparisons across multiple years.
+- With data confined to a single year, the focus of the analysis will be on month-to-month or seasonal patterns within 2022 rather than year-over-year trends.
 
 
 ![histogram_of_month](https://github.com/user-attachments/assets/e6af60fa-0676-4c6e-af3b-c1a5bfda1d20)
 
 ### Inference for the Month Histogram
 
-The histogram shows the distribution of flights across the first six months of the year. The frequency of flights is relatively consistent from month to month, with a slight increase in flight numbers in April, May, and June. This could indicate an uptick in air travel as the year progresses, potentially due to seasonal factors such as spring and early summer travel. However, without data from the latter half of the year, it's challenging to identify full seasonal trends.
+- The histogram shows the distribution of flights across the first six months of the year. The frequency of flights is relatively consistent from month to month, with a slight increase in flight numbers in April, May, and June.
+- This could indicate an uptick in air travel as the year progresses, potentially due to seasonal factors such as spring and early summer travel. However, without data from the latter half of the year, it's challenging to identify full seasonal trends.
 
 
 ![histogram_of_day](https://github.com/user-attachments/assets/3c5f04c7-8bde-4583-8879-e14c395602b4)
 
 ### Inference for the Day Histogram
 
-The histogram shows a fairly uniform distribution of flights across most days of the month, with each day having a similar number of flights. However, there is a noticeable increase on the 31st day, indicating that months with 31 days (e.g., January, March, May) might have slightly higher flight activity compared to shorter months. This increase could reflect peak travel days near the end of these months, possibly due to monthly travel patterns or operational schedules aligning with month-end demand.
+- The histogram shows a fairly uniform distribution of flights across most days of the month, with each day having a similar number of flights. However, there is a noticeable increase on the 31st day, indicating that months with 31 days (e.g., January, March, May) might have slightly higher flight activity compared to shorter months.
+- This increase could reflect peak travel days near the end of these months, possibly due to monthly travel patterns or operational schedules aligning with month-end demand.
 
 
 ![histogram_of_scheddeptime](https://github.com/user-attachments/assets/b72ce224-f80e-44fe-a571-afbf1e4bc2ef)
 
 ### Inference for the Scheduled Departure Time Histogram
 
-The histogram displays the distribution of scheduled departure times throughout the day. Peaks in the early morning (around 500-1000), midday (around 1200-1300), and late afternoon to early evening (around 1700-1900) indicate high-frequency departure periods. This pattern likely reflects common scheduling practices, with airlines clustering flights during these times to accommodate peak passenger demand. The low frequency of departures around midnight and early morning hours suggests limited operations during these off-peak times. The small peak near zero may represent flights scheduled very early in the morning or possibly some data anomalies.
+- The histogram displays the distribution of scheduled departure times throughout the day. Peaks in the early morning (around 500-1000), midday (around 1200-1300), and late afternoon to early evening (around 1700-1900) indicate high-frequency departure periods.
+- This pattern likely reflects common scheduling practices, with airlines clustering flights during these times to accommodate peak passenger demand. The low frequency of departures around midnight and early morning hours suggests limited operations during these off-peak times. The small peak near zero may represent flights scheduled very early in the morning or possibly some data anomalies.
 
 
 ![histogram_of_flight](https://github.com/user-attachments/assets/243040f8-c15a-45b7-a6a2-b37f632d555d)
 
 ### Inference for the Flight Histogram
 
-The histogram illustrates the distribution of flights based on their flight numbers. There is a high frequency of flights with lower flight numbers (under 600), and the frequency gradually decreases as the flight numbers increase, with fewer flights having numbers above 800. This pattern could be due to airline-specific numbering conventions, where lower flight numbers may correspond to more frequent or regular routes, while higher numbers are used for less common flights. The declining frequency toward higher flight numbers may indicate that these are special or seasonal flights, or flights that operate on less busy routes.
+- The histogram illustrates the distribution of flights based on their flight numbers. There is a high frequency of flights with lower flight numbers (under 600), and the frequency gradually decreases as the flight numbers increase, with fewer flights having numbers above 800.
+- This pattern could be due to airline-specific numbering conventions, where lower flight numbers may correspond to more frequent or regular routes, while higher numbers are used for less common flights. The declining frequency toward higher flight numbers may indicate that these are special or seasonal flights, or flights that operate on less busy routes.
 
 
 ![histogram_of_distance](https://github.com/user-attachments/assets/890a1ae9-637a-4a78-bb29-6a5a363ff31b)
@@ -367,9 +372,9 @@ The histogram shows the distribution of actual departure times throughout the da
 
 ### Inference for the Departure Delay Histogram
 
-The histogram of departure delays is highly right-skewed, with most flights having delays close to zero. The majority of departures experience minimal to no delay, indicating that flights generally leave on time or with only a small delay. However, there is a long tail extending to high delay values, with some extreme cases showing delays of several hundred minutes or more.
+- The histogram of departure delays is highly right-skewed, with most flights having delays close to zero. The majority of departures experience minimal to no delay, indicating that flights generally leave on time or with only a small delay. However, there is a long tail extending to high delay values, with some extreme cases showing delays of several hundred minutes or more.
 
-This pattern suggests that while severe delays are relatively rare, they can be substantial when they do occur. The right skew highlights that most delays are minor, but a small percentage of flights experience significant departure delays, likely due to operational or weather-related disruptions.
+- This pattern suggests that while severe delays are relatively rare, they can be substantial when they do occur. The right skew highlights that most delays are minor, but a small percentage of flights experience significant departure delays, likely due to operational or weather-related disruptions.
 
 
 ![histogram_of_arrtime](https://github.com/user-attachments/assets/926d444e-2ee5-486a-8127-7f709ebed0e4)
@@ -389,9 +394,9 @@ This pattern aligns with typical airline scheduling, where flights are timed to 
 
 ### Inference for the Arrival Delay Histogram
 
-The histogram of arrival delays is highly right-skewed, with the majority of flights experiencing minimal to no delay. Most arrival delays are clustered close to zero, indicating that flights generally arrive on time or with only a small delay. However, there is a long tail extending to higher delay values, with a few extreme cases where delays reach several hundred minutes or more.
+- The histogram of arrival delays is highly right-skewed, with the majority of flights experiencing minimal to no delay. Most arrival delays are clustered close to zero, indicating that flights generally arrive on time or with only a small delay. However, there is a long tail extending to higher delay values, with a few extreme cases where delays reach several hundred minutes or more.
 
-This pattern suggests that severe arrival delays are relatively rare but can be substantial when they occur. Overall, the data indicates that most flights have minor arrival delays, with only a small proportion of flights facing significant delays, likely due to unforeseen disruptions or operational issues.
+- This pattern suggests that severe arrival delays are relatively rare but can be substantial when they occur. Overall, the data indicates that most flights have minor arrival delays, with only a small proportion of flights facing significant delays, likely due to unforeseen disruptions or operational issues.
 
 
 ![histogram_of_airtime](https://github.com/user-attachments/assets/3ac978d8-07cf-46f5-8db3-8d0ed8b7c184)
@@ -411,7 +416,7 @@ Overall, the distribution suggests that the majority of flights are relatively s
 
 ### Inference for the Carrier Bar Plot
 
-The bar plot shows the frequency of flights by carrier. **AS** (Alaska Airlines) has the highest number of flights in the dataset, followed by **QX** (Horizon Air), **DL** (Delta Air Lines), and **OO** (SkyWest Airlines). This indicates that a few carriers dominate the dataset, with Alaska Airlines accounting for a significant portion of flights. Smaller airlines like **G4** (Allegiant Air) and **F9** (Frontier Airlines) have relatively low frequencies, suggesting limited operations or regional focus in the data. This distribution highlights the presence of both major and regional carriers in the dataset.
+- The bar plot shows the frequency of flights by carrier. **AS** (Alaska Airlines) has the highest number of flights in the dataset, followed by **QX** (Horizon Air), **DL** (Delta Air Lines), and **OO** (SkyWest Airlines). This indicates that a few carriers dominate the dataset, with Alaska Airlines accounting for a significant portion of flights. Smaller airlines like **G4** (Allegiant Air) and **F9** (Frontier Airlines) have relatively low frequencies, suggesting limited operations or regional focus in the data. This distribution highlights the presence of both major and regional carriers in the dataset.
 
 ## Step 4.2 Bivariate Analysis
 For our bivariate analysis, we'll consider the dep_delay column as the target. 
@@ -454,6 +459,108 @@ for col in categorical_columns:
     plt.show()
 
 ```
+
+![ScatterPlot_depdelay_year](https://github.com/user-attachments/assets/ca658f75-c0f4-41de-b0a8-f6568fb3ade2)
+
+### Inference for the Scatter Plot of Year vs. Departure Delay
+
+- The scatter plot of `year` vs. `dep_delay` shows that all data points are concentrated in the year 2022, with no flights from other years. This aligns with the dataset being limited to a single year. 
+
+- The departure delays vary significantly within 2022, with most delays clustered around zero, indicating on-time departures. However, there are outliers with extreme delays reaching over 2000 minutes. These outliers represent a small number of flights with exceptionally high delays, which could be due to severe operational or weather disruptions. The plot suggests that the primary variability in departure delay occurs within 2022 itself, as there are no data points for other years.
+
+
+![ScatterPlot_dep_delay_month](https://github.com/user-attachments/assets/b15ff0ed-31d5-486c-9f93-8ca5eef81a2b)
+
+### Inference for the Scatter Plot of Month vs. Departure Delay
+
+The scatter plot of `month` vs. `dep_delay` shows the distribution of departure delays across the first six months of the year. 
+
+- Most flights have delays close to zero across all months, indicating that flights are generally on time or only slightly delayed.
+- However, there are several outliers with substantial delays, some exceeding 2000 minutes, particularly in January, February, and April. These extreme delays suggest sporadic disruptions that may be due to operational or weather-related issues.
+- The pattern does not show a clear trend of increasing or decreasing delays across the months, suggesting that departure delays are relatively consistent month-to-month, with occasional extreme outliers.
+
+
+![ScatterPlot_depdelay_day](https://github.com/user-attachments/assets/132e88e4-5d24-46f8-8519-31fb452bd2a0)
+
+### Inference for the Scatter Plot of Day vs. Departure Delay
+
+The scatter plot of `day` vs. `dep_delay` shows the distribution of departure delays across each day of the month:
+
+- Most data points are concentrated near zero delay across all days, indicating that the majority of flights depart on time or with minimal delay.
+- There are several outliers with very high delays (over 1000 minutes), scattered throughout the month without a clear pattern. This suggests that extreme delays occur sporadically and are not confined to specific days.
+- There appears to be no significant trend in departure delays across the days, implying that delays are relatively consistent day-to-day, with only occasional extreme delays.
+
+This plot highlights that while departure delays are generally low, occasional severe delays can happen on any day, likely due to unpredictable factors.
+
+
+![ScatterPlot_scheddeptime_depdelay](https://github.com/user-attachments/assets/1183bd2b-b6a6-4b10-8a8c-204995268f3e)
+
+### Inference for the Scatter Plot of Scheduled Departure Time vs. Departure Delay
+
+The scatter plot of `sched_dep_time` vs. `dep_delay` shows how departure delays vary with the scheduled departure time:
+
+- Most points are clustered near zero delay across all scheduled departure times, indicating that flights generally depart on time or with minor delays, regardless of the time of day.
+- However, there are noticeable clusters of higher delays (over 500 minutes) around certain times, particularly in the early morning (around 0-500) and late afternoon to early evening (around 1500-2000). This suggests that flights scheduled during these periods may be more prone to significant delays.
+- The distribution of extreme delays (1000 minutes or more) appears scattered across various times but is relatively sparse, indicating that such severe delays are rare and unpredictable.
+
+Overall, while departure delays are generally minimal, certain scheduled times, especially early morning and late afternoon, may be associated with higher chances of delays. This could be due to operational challenges or increased air traffic during these periods.
+
+
+![ScatterPlot_schedarr_time_depdelay](https://github.com/user-attachments/assets/3973755e-aa83-430b-a220-aad0d72f5bc4)
+
+### Inference for the Scatter Plot of Scheduled Arrival Time vs. Departure Delay
+
+The scatter plot of `sched_arr_time` vs. `dep_delay` shows how departure delays vary with the scheduled arrival time:
+
+- Most points are clustered near zero delay across all scheduled arrival times, indicating that flights generally depart on time or with minimal delays, regardless of the intended arrival time.
+- There are a few outliers with very high delays (exceeding 1000 minutes), spread across different arrival times, but these are relatively rare.
+- A slight increase in departure delays is observed around scheduled arrival times in the early afternoon (around 1200-1500) and late evening (around 2000-2200), suggesting that flights with these intended arrival windows may be more prone to higher delays.
+
+Overall, while departure delays are typically low, there are occasional high delays across all arrival times, with slightly higher delays observed for flights scheduled to arrive in the afternoon and late evening. This may be influenced by congestion or operational constraints during these peak arrival periods.
+
+![ScatterPlot_depdelay_distance](https://github.com/user-attachments/assets/aa2834ae-3bc3-410e-b603-4e6341c9d712)
+
+**Inference for Scatter Plot of Distance vs. Departure Delay**:
+   - Departure delays appear to be relatively consistent across different flight distances, with no strong trend indicating that longer or shorter flights have more or less delay.
+   - Outliers with extreme delays (over 1000 minutes) are scattered across various distances, indicating that significant delays are not limited to flights of any specific length.
+  
+
+
+![ScatterPlot_depdelay_hour](https://github.com/user-attachments/assets/e2ea2e7e-ba5d-463f-b390-6326e4e3ad76)
+
+**Inference for Scatter Plot of Hour vs. Departure Delay**:
+   - Departure delays seem to increase slightly during certain hours, particularly in the early morning (around 0-6 AM), where some extreme delays are evident.
+   - Delays are present at all hours, but severe outliers are rare, suggesting that while delays are possible throughout the day, the majority are minimal.
+
+
+  
+![ScatterPlot_depdelay_airtime](https://github.com/user-attachments/assets/828354e9-cfb5-4573-8abf-b0acbd605049)
+
+**Inference for Scatter Plot of Air Time vs. Departure Delay**:
+   - There is no clear relationship between air time (duration of the flight) and departure delay.
+   - Most flights, regardless of air time, tend to have low delays, although a few outliers with long delays can be seen across various flight durations.
+
+
+![ViolinPlot_depdelay_origin](https://github.com/user-attachments/assets/2a6a5e3c-273b-4aac-b40e-31b431867878)
+
+**Violin Plot of Departure Delay by Carrier**:
+   - Different airlines exhibit varied patterns in departure delays. For instance, **B6** (JetBlue Airways) and **AA** (American Airlines) show more significant delays, with a wider spread in delay times.
+   - Some airlines, such as **QX** (Horizon Air), have smaller spreads and generally lower delays, indicating more consistent on-time performance.
+   - The violins with long tails, particularly for airlines like **B6** and **AA**, suggest that these carriers occasionally experience very high delays.
+
+
+
+
+![Viol](https://github.com/user-attachments/assets/b43c2a35-3d14-4084-a44b-17c8571930d1)
+
+**Violin Plot of Departure Delay by Origin (SEA and PDX)**:
+   - The distribution of departure delays is fairly similar between **SEA** (Seattle) and **PDX** (Portland), with both airports having the majority of delays clustered near zero.
+   - Both origins show some extreme delays with long tails, but these severe delays are relatively rare.
+   - There is no significant difference in departure delay patterns between these two airports, indicating that delays are not strongly influenced by the airport of origin in this dataset.
+
+### Summary
+Overall, these visualizations suggest that departure delays are generally low across various distances, times of day, and flight durations, with some exceptions. Certain airlines and times of day, particularly early morning, show a greater spread of delays. Both SEA and PDX airports exhibit similar delay distributions, indicating comparable on-time performance between the two origins.
+
 
 # Step 5: Data Preprocessing
 ## Step 5.1: Missing Value Treatment
