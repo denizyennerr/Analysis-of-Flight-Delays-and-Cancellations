@@ -301,11 +301,13 @@ for col in categorical_columns:
 
 The histogram shows that all flight data in the dataset is from a single year, 2022. This suggests that the dataset is limited to a one-year period, which could restrict any long-term trend analysis or seasonal comparisons across multiple years. With data confined to a single year, the focus of the analysis will be on month-to-month or seasonal patterns within 2022 rather than year-over-year trends.
 
+
 ![histogram_of_month](https://github.com/user-attachments/assets/e6af60fa-0676-4c6e-af3b-c1a5bfda1d20)
 
 ### Inference for the Month Histogram
 
 The histogram shows the distribution of flights across the first six months of the year. The frequency of flights is relatively consistent from month to month, with a slight increase in flight numbers in April, May, and June. This could indicate an uptick in air travel as the year progresses, potentially due to seasonal factors such as spring and early summer travel. However, without data from the latter half of the year, it's challenging to identify full seasonal trends.
+
 
 ![histogram_of_day](https://github.com/user-attachments/assets/3c5f04c7-8bde-4583-8879-e14c395602b4)
 
@@ -313,42 +315,97 @@ The histogram shows the distribution of flights across the first six months of t
 
 The histogram shows a fairly uniform distribution of flights across most days of the month, with each day having a similar number of flights. However, there is a noticeable increase on the 31st day, indicating that months with 31 days (e.g., January, March, May) might have slightly higher flight activity compared to shorter months. This increase could reflect peak travel days near the end of these months, possibly due to monthly travel patterns or operational schedules aligning with month-end demand.
 
+
 ![histogram_of_scheddeptime](https://github.com/user-attachments/assets/b72ce224-f80e-44fe-a571-afbf1e4bc2ef)
+
+### Inference for the Scheduled Departure Time Histogram
+
+The histogram displays the distribution of scheduled departure times throughout the day. Peaks in the early morning (around 500-1000), midday (around 1200-1300), and late afternoon to early evening (around 1700-1900) indicate high-frequency departure periods. This pattern likely reflects common scheduling practices, with airlines clustering flights during these times to accommodate peak passenger demand. The low frequency of departures around midnight and early morning hours suggests limited operations during these off-peak times. The small peak near zero may represent flights scheduled very early in the morning or possibly some data anomalies.
 
 
 ![histogram_of_flight](https://github.com/user-attachments/assets/243040f8-c15a-45b7-a6a2-b37f632d555d)
 
+### Inference for the Flight Histogram
+
+The histogram illustrates the distribution of flights based on their flight numbers. There is a high frequency of flights with lower flight numbers (under 600), and the frequency gradually decreases as the flight numbers increase, with fewer flights having numbers above 800. This pattern could be due to airline-specific numbering conventions, where lower flight numbers may correspond to more frequent or regular routes, while higher numbers are used for less common flights. The declining frequency toward higher flight numbers may indicate that these are special or seasonal flights, or flights that operate on less busy routes.
+
+
 ![histogram_of_distance](https://github.com/user-attachments/assets/890a1ae9-637a-4a78-bb29-6a5a363ff31b)
+
+### Inference for the Distance Histogram
+
+The histogram of flight distances shows a distinct pattern with several peaks, suggesting a mixture of short-haul, medium-haul, and long-haul flights in the dataset:
+
+- The highest peaks are observed around 500 miles and 1000 miles, indicating a large number of short- to medium-distance flights. This is typical for regional or domestic routes.
+- There is a gradual decline in frequency as distances increase, with fewer long-haul flights (above 1500 miles).
+- Another smaller cluster of flights is visible around 2500 miles, likely representing longer domestic or international routes.
+
 
 ![histogram_of_hour](https://github.com/user-attachments/assets/9e5da80d-9791-4149-b16a-70d2dbf7aba0)
 
-![histogram_of_minute](https://github.com/user-attachments/assets/524845f4-3667-4838-ba96-6a6189e83d49)
+### Inference for the Hour Histogram
+
+The histogram shows the distribution of flight departures by hour of the day:
+
+- There are clear peaks in the early morning (around 6-10 AM) and mid-morning to early afternoon (around 10 AM to 1 PM), indicating that these are popular times for flights to depart. This aligns with typical passenger demand and scheduling patterns, as travelers often prefer morning and midday flights.
+- There is another smaller peak in the early evening (around 5-7 PM), likely due to return or evening flights.
+- Departure frequency drops significantly in the late evening and early morning hours (midnight to 5 AM), reflecting limited flight activity during these off-peak hours.
+
 
 ![histogram_of_deptime](https://github.com/user-attachments/assets/e62b3f04-850b-44ca-bd04-9c3fc149c772)
 
+### Inference for the Departure Time Histogram
+
+The histogram shows the distribution of actual departure times throughout the day:
+
+- There are prominent peaks in the morning (around 6-10 AM) and midday (around 12 PM), indicating that most flights are scheduled to depart during these times. This is consistent with passenger demand for morning and midday travel.
+- A secondary peak is observed in the late afternoon and early evening (around 5-7 PM), reflecting another common time for departures, likely due to return flights or evening travel preferences.
+- Departure frequency drops significantly during the late-night and early-morning hours (after 10 PM and before 5 AM), with limited flight activity during these off-peak hours.
+
+
 ![histogram_of_depdelay](https://github.com/user-attachments/assets/0310bee9-db62-4cf1-b565-cfe4237a2819)
+
+### Inference for the Departure Delay Histogram
+
+The histogram of departure delays is highly right-skewed, with most flights having delays close to zero. The majority of departures experience minimal to no delay, indicating that flights generally leave on time or with only a small delay. However, there is a long tail extending to high delay values, with some extreme cases showing delays of several hundred minutes or more.
+
+This pattern suggests that while severe delays are relatively rare, they can be substantial when they do occur. The right skew highlights that most delays are minor, but a small percentage of flights experience significant departure delays, likely due to operational or weather-related disruptions.
+
 
 ![histogram_of_arrtime](https://github.com/user-attachments/assets/926d444e-2ee5-486a-8127-7f709ebed0e4)
 
+### Inference for the Arrival Time Histogram
+
+The histogram shows the distribution of arrival times throughout the day:
+
+- Arrival times have several peaks, with the highest frequencies observed around midday (1200-1500) and in the early evening (1700-1900). These patterns suggest that flights are scheduled to arrive during these busy periods, likely aligning with high passenger demand and connecting flight schedules.
+- There is a low frequency of arrivals in the early morning hours (0000-0500), indicating limited overnight flights.
+- The distribution is relatively balanced throughout the rest of the day, with steady frequencies from morning to late evening.
+
+This pattern aligns with typical airline scheduling, where flights are timed to arrive at convenient intervals for passengers, especially during peak travel hours.
+
+
 ![histogram_of_arrdelay](https://github.com/user-attachments/assets/bd5df9d8-71d7-4186-a3c8-5ee27b50e1d0)
+
+### Inference for the Arrival Delay Histogram
+
+The histogram of arrival delays is highly right-skewed, with the majority of flights experiencing minimal to no delay. Most arrival delays are clustered close to zero, indicating that flights generally arrive on time or with only a small delay. However, there is a long tail extending to higher delay values, with a few extreme cases where delays reach several hundred minutes or more.
+
+This pattern suggests that severe arrival delays are relatively rare but can be substantial when they occur. Overall, the data indicates that most flights have minor arrival delays, with only a small proportion of flights facing significant delays, likely due to unforeseen disruptions or operational issues.
+
 
 ![histogram_of_airtime](https://github.com/user-attachments/assets/3ac978d8-07cf-46f5-8db3-8d0ed8b7c184)
 
-![histogram_of_temp](https://github.com/user-attachments/assets/31e07a37-8095-443c-80a8-49046af3ea8e)
+### Inference for the Air Time Histogram
 
-![histogram_of_dewp](https://github.com/user-attachments/assets/88e1927c-8c7c-4711-a7b7-6aa56693fa46)
+The histogram of air time shows a distribution with several peaks, indicating a mix of short, medium, and long flights in the dataset:
 
-![histogram_of_humid](https://github.com/user-attachments/assets/0627c880-fb3f-4ffc-aa1c-8f8b4374c9ee)
+- The highest frequencies are observed around 50 to 150 minutes, suggesting that most flights in the dataset are short- to medium-haul.
+- There is a gradual decline in frequency as air time increases, with fewer flights lasting over 200 minutes. These likely represent longer domestic or international flights.
+- Very few flights have air times over 300 minutes, indicating a limited number of long-haul routes in the dataset.
 
-![histogram_of_windspeed](https://github.com/user-attachments/assets/2e0ca27b-10b9-40f9-b291-850c17ab3b90)
+Overall, the distribution suggests that the majority of flights are relatively short, which could be typical of regional or domestic travel patterns. The declining frequency for higher air times reflects fewer long-distance flights.
 
-![histogram_of_windgust](https://github.com/user-attachments/assets/ebe5a2a2-1c10-45d9-9a48-108759a2fab7)
-
-![histogram_of_precip](https://github.com/user-attachments/assets/e7aa3d57-e477-44fe-9af0-48244545a6a9)
-
-![histogram_of_pressure](https://github.com/user-attachments/assets/feb2c160-9505-4e01-8c22-ff05b7ac5daf)
-
-![histogram_of_visib](https://github.com/user-attachments/assets/4e59b4b1-1af0-40b2-9220-14b3a5dc4d73)
 
 ![barplot_of_carrier](https://github.com/user-attachments/assets/20429bc9-69ec-4c2b-b271-edc0e32571ee)
 
