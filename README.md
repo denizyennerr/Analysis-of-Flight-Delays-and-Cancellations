@@ -301,7 +301,6 @@ for col in categorical_columns:
 
 ![histogram_of_day](https://github.com/user-attachments/assets/3c5f04c7-8bde-4583-8879-e14c395602b4)
 
-![histogram_sched_dep_time](https://github.com/user-attachments/assets/ea274523-4414-4a16-9904-1bb95db0657c)
 
 
 ![histogram_of_flight](https://github.com/user-attachments/assets/243040f8-c15a-45b7-a6a2-b37f632d555d)
@@ -326,9 +325,13 @@ for col in categorical_columns:
 
 ![histogram_of_dewp](https://github.com/user-attachments/assets/88e1927c-8c7c-4711-a7b7-6aa56693fa46)
 
-![histogram_of_humid](https://github.com/user-attachments/assets/2f85dd8f-1c18-45be-8eac-aeacfce49b4c)
+![histogram_of_humid](https://github.com/user-attachments/assets/0627c880-fb3f-4ffc-aa1c-8f8b4374c9ee)
 
+![histogram_of_windspeed](https://github.com/user-attachments/assets/2e0ca27b-10b9-40f9-b291-850c17ab3b90)
 
+![histogram_of_windgust](https://github.com/user-attachments/assets/ebe5a2a2-1c10-45d9-9a48-108759a2fab7)
+
+![histogram_of_precip](https://github.com/user-attachments/assets/e7aa3d57-e477-44fe-9af0-48244545a6a9)
 
 
 
