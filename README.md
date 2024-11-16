@@ -297,11 +297,24 @@ for col in categorical_columns:
 ```
 ![histogram_of_year](https://github.com/user-attachments/assets/8b3b97e4-9535-41db-8916-7cb31187da90)
 
+### Inference for the Year Histogram
+
+The histogram shows that all flight data in the dataset is from a single year, 2022. This suggests that the dataset is limited to a one-year period, which could restrict any long-term trend analysis or seasonal comparisons across multiple years. With data confined to a single year, the focus of the analysis will be on month-to-month or seasonal patterns within 2022 rather than year-over-year trends.
+
 ![histogram_of_month](https://github.com/user-attachments/assets/e6af60fa-0676-4c6e-af3b-c1a5bfda1d20)
+
+### Inference for the Month Histogram
+
+The histogram shows the distribution of flights across the first six months of the year. The frequency of flights is relatively consistent from month to month, with a slight increase in flight numbers in April, May, and June. This could indicate an uptick in air travel as the year progresses, potentially due to seasonal factors such as spring and early summer travel. However, without data from the latter half of the year, it's challenging to identify full seasonal trends.
 
 ![histogram_of_day](https://github.com/user-attachments/assets/3c5f04c7-8bde-4583-8879-e14c395602b4)
 
+### Inference for the Day Histogram
+
+The histogram shows a fairly uniform distribution of flights across most days of the month, with each day having a similar number of flights. However, there is a noticeable increase on the 31st day, indicating that months with 31 days (e.g., January, March, May) might have slightly higher flight activity compared to shorter months. This increase could reflect peak travel days near the end of these months, possibly due to monthly travel patterns or operational schedules aligning with month-end demand.
+
 ![histogram_of_scheddeptime](https://github.com/user-attachments/assets/b72ce224-f80e-44fe-a571-afbf1e4bc2ef)
+
 
 ![histogram_of_flight](https://github.com/user-attachments/assets/243040f8-c15a-45b7-a6a2-b37f632d555d)
 
@@ -339,12 +352,9 @@ for col in categorical_columns:
 
 ![barplot_of_carrier](https://github.com/user-attachments/assets/20429bc9-69ec-4c2b-b271-edc0e32571ee)
 
+### Inference for the Carrier Bar Plot
 
-
-
-
-
-
+The bar plot shows the frequency of flights by carrier. **AS** (Alaska Airlines) has the highest number of flights in the dataset, followed by **QX** (Horizon Air), **DL** (Delta Air Lines), and **OO** (SkyWest Airlines). This indicates that a few carriers dominate the dataset, with Alaska Airlines accounting for a significant portion of flights. Smaller airlines like **G4** (Allegiant Air) and **F9** (Frontier Airlines) have relatively low frequencies, suggesting limited operations or regional focus in the data. This distribution highlights the presence of both major and regional carriers in the dataset.
 
 ## Step 4.2 Bivariate Analysis
 For our bivariate analysis, we'll consider the dep_delay column as the target. 
