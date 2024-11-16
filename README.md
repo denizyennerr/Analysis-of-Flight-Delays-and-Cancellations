@@ -295,53 +295,7 @@ for col in categorical_columns:
     plt.show()
 
 ```
-![histogram_of_year](https://github.com/user-attachments/assets/71ce6937-e8f7-4c0c-9a58-2bc17a3c94dd)
-
-![histogram_of_month](https://github.com/user-attachments/assets/73b02405-7d18-422b-8967-3c2cf52eb002)
-
-![histogram_of_day](https://github.com/user-attachments/assets/558c4137-77cf-4cdd-b2bb-b535ef63cba4)
-
-![histogramof_dep_time](https://github.com/user-attachments/assets/e3872c8a-4430-471b-ad61-bcd8df240a02)
-
-![histogram_of_scheduled_arr_time](https://github.com/user-attachments/assets/e5fcb7cf-6020-4041-9cb7-eabe8f57f0a4)
-
-![histogram_of_flight](https://github.com/user-attachments/assets/0bac1112-7024-40f2-82ed-8b169816df25)
-
-![histogram_of_distance](https://github.com/user-attachments/assets/edf318f7-4bc0-4e1b-9c55-abc3dca25b1b)
-
-![histogram_of_hour](https://github.com/user-attachments/assets/ad21ed1f-c1df-429f-9ac4-85d829ca0036)
-
-![histogram_of_minute](https://github.com/user-attachments/assets/a9c8459c-9ddc-40f2-a99c-9a515caf5fed)
-
-![histogram_of_dep_time](https://github.com/user-attachments/assets/2a7fa4d9-cd00-403b-9e91-7ff4acb22353)
-
-![histogram_of_dep_delay](https://github.com/user-attachments/assets/21cff76a-a628-4b64-96ba-88610178947f)
-
-![histogram_of_arr_time](https://github.com/user-attachments/assets/24372b2f-f7b6-4090-b52f-70c087ba95a0)
-
-![histogram_of_arr_delay](https://github.com/user-attachments/assets/181ffb6c-dca3-486f-b45c-18128e9ba983)
-
-![histogram_of_air_time](https://github.com/user-attachments/assets/24a69f9e-96ae-4fdc-bb52-e93afdbf65e5)
-
-![histogram_of_temp](https://github.com/user-attachments/assets/94bbbf65-bf2d-469e-bd92-ed1827dad315)
-
-![histogram_of_dewp](https://github.com/user-attachments/assets/a10579ff-cec1-427f-b0d2-13aae5553b44)
-
-![histogram_of_humid](https://github.com/user-attachments/assets/2c55fb7f-51c5-46de-8065-e9572f6caf44)
-
-![histogram_of_wind_dir](https://github.com/user-attachments/assets/b30633e3-bde2-48ea-b076-347678b3a8b1)
-
-![hist_of_wind_speed](https://github.com/user-attachments/assets/20b70c40-df54-4a36-b0e1-f84df301ee73)
-
-![hist_of_wind_gust](https://github.com/user-attachments/assets/2f89b982-6053-4234-99ad-37a1f0acb010)
-
-![histogram_of_precip](https://github.com/user-attachments/assets/ef6b566d-10ea-4707-9a40-2404442945b4)
-
-![hist_of_pressure](https://github.com/user-attachments/assets/6210c535-e31a-4f28-a926-1829b7b6ba60)
-
-![hist_of_visib](https://github.com/user-attachments/assets/5f669903-a41a-4bb7-b524-18ef251999a7)
-
-![barplot_of_carrier](https://github.com/user-attachments/assets/f8490fe1-833f-4125-ac4a-23f7c6dd3fde)
+![image](https://github.com/user-attachments/assets/5cc79346-195d-4545-bdd1-1c327d5b960c)
 
 
 ## Step 4.2 Bivariate Analysis
@@ -1424,7 +1378,7 @@ Based on the analysis, we recommend the following actions:
    - Offer compensation or additional benefits (e.g., lounge access or meal vouchers) to affected passengers on delay-prone routes, especially for long-haul flights with a high likelihood of delay.
 7. **Analyze Seasonal Trends and Adjust Capacity**:
    - Seasonal variations in delays suggest that airlines could benefit from **adjusting flight capacity and crew availability** based on peak travel and weather conditions. For example, adding extra flights or adjusting schedules during busy summer months can alleviate bottlenecks.
-   - Conduct further analysis on monthly trends to identify potential off-peak seasons where schedules can be optimized to improve operational efficiency and reduce costs.
+   - Conduct further analysis in monthly trends to identify potential off-peak seasons where schedules can be optimized to improve operational efficiency and reduce costs.
 
 
 ### Limitations
