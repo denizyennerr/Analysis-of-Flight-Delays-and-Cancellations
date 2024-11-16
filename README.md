@@ -299,6 +299,32 @@ for col in categorical_columns:
 
 ![histogram_of_month](https://github.com/user-attachments/assets/e6af60fa-0676-4c6e-af3b-c1a5bfda1d20)
 
+![histogram_of_day](https://github.com/user-attachments/assets/3c5f04c7-8bde-4583-8879-e14c395602b4)
+
+![histogram_sched_dep_time](https://github.com/user-attachments/assets/36c196dd-4fb7-473b-a45e-819dbaca8cf9)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## Step 4.2 Bivariate Analysis
