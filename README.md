@@ -295,13 +295,13 @@ for col in categorical_columns:
     plt.show()
 
 ```
-![histogram_of_year](https://github.com/user-attachments/assets/712cf598-8538-4a9d-b218-61b936df00f8)
+![histogram_of_year](https://github.com/user-attachments/assets/8b3b97e4-9535-41db-8916-7cb31187da90)
 
 ![histogram_of_month](https://github.com/user-attachments/assets/e6af60fa-0676-4c6e-af3b-c1a5bfda1d20)
 
 ![histogram_of_day](https://github.com/user-attachments/assets/3c5f04c7-8bde-4583-8879-e14c395602b4)
 
-
+![histogram_of_scheddeptime](https://github.com/user-attachments/assets/b72ce224-f80e-44fe-a571-afbf1e4bc2ef)
 
 ![histogram_of_flight](https://github.com/user-attachments/assets/243040f8-c15a-45b7-a6a2-b37f632d555d)
 
@@ -333,7 +333,11 @@ for col in categorical_columns:
 
 ![histogram_of_precip](https://github.com/user-attachments/assets/e7aa3d57-e477-44fe-9af0-48244545a6a9)
 
+![histogram_of_pressure](https://github.com/user-attachments/assets/feb2c160-9505-4e01-8c22-ff05b7ac5daf)
 
+![histogram_of_visib](https://github.com/user-attachments/assets/4e59b4b1-1af0-40b2-9220-14b3a5dc4d73)
+
+![barplot_of_carrier](https://github.com/user-attachments/assets/20429bc9-69ec-4c2b-b271-edc0e32571ee)
 
 
 
