@@ -295,7 +295,8 @@ for col in categorical_columns:
     plt.show()
 
 ```
-![image](https://github.com/user-attachments/assets/5cc79346-195d-4545-bdd1-1c327d5b960c)
+![histogram_of_year](https://github.com/user-attachments/assets/d73063bc-b6c8-484e-9728-41f28efe9507)
+
 
 
 ## Step 4.2 Bivariate Analysis
