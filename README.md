@@ -19,26 +19,27 @@
 ## Project Overview
 The objective of this project is to analyze a comprehensive dataset containing flight information, including departure and arrival times, delays, distances, weather conditions, and airline details. By exploring this data, we aim to identify significant patterns and correlations that contribute to flight delays. This analysis will help to understand the key factors influencing delays, allowing us to develop predictive models and actionable insights to improve airline punctuality and operational efficiency. Through careful data exploration and modeling, this project seeks to support better decision-making for airlines and enhance the overall passenger experience by reducing delays.
 
-### Project Details
-- A date-time index was created for Time Series Analysis and Forecasting, allowing for more effective plotting and time series evaluations. 
-- Departure and arrival times were corrected to ensure the accuracy of the data.
-- Duplicates were checked to identify any inconsistencies or repeated information within the dataset.
-- A logical relationship between weather variables and flight delays was investigated.
-- Cleaning and organizing the data from the CSV file.
-- Identified which airlines perform the worst in terms of delays.
-- Determined which airlines perform the best.
-- Analyzed whether flight performance varies by month, whether a certain airline consistently performs poorly, or if performance fluctuates.
-- Identified which routes have the highest probability of falling into the level 1 delay category.
+### Project Details:
+
+A date-time index was created for performing Time Series Analysis and Forecasting, enabling effective plotting and time series evaluations.  
+- Departure and arrival times were corrected to ensure data accuracy.  
+- Duplication checks were performed to identify inconsistencies or repeated information within the data.  
+- A logical relationship between weather variables and flight delays was considered.  
+- Data from the CSV file was cleaned and organized.  
+- The worst-performing airlines in terms of delays were identified.  
+- The best-performing airlines were also determined.  
+- Flight performance was analyzed by month to see if certain airlines consistently perform poorly or if performance fluctuates.  
+- Routes with the highest probability of falling into the level 1 delay category were identified.
 
 ### Project Questions:
-1. Create a categorical variable to understand the relationship between each airline and flight distance.
-2. Classify flight distances into three main groups: distances under 500 miles, distances between 500-1000 miles, and distances of 1000 miles and above.
-3. Identify the airlines with the highest number of flights conducted.
-4. Compare the performance of airlines based on delays.
-5. Examine whether airline performance varies across different months of the year, and show the top 5 airlines with the best performance and the bottom 5 with the worst performance.
-6. Determine the percentage of flight cancellations and display how this varies by airline.
-7. Is there a specific time of day and/or time of year with higher delay durations?
-8. Which routes have the highest delay durations?
+1. Creating a categorical variable to analyze the relationship between each airline and flight distance.
+2. Classifying flight distances as follows: less than 500 miles, between 500 and 1000 miles, and above 1000 miles.
+3. Identifying the airlines with the highest number of flights conducted.
+4. Comparing airlines based on delays.
+5. Examining if airline performance varies by month; display the top 5 best and bottom 5 worst performing airlines.
+6. Determining the percentage of cancellations and visualize this by airline.
+7. Investigating if certain times of day or year experience longer delays.
+8. Identifying routes with the longest delay durations.
 
 ### Data Sources
 - Airline Flight Delay and Cancellation Data, August 2019 - August 2023 obtained from the US Department of Transportation, Bureau of Transportation Statistics.
